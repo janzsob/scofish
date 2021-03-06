@@ -2,3 +2,4 @@ FishingProject/secret.py
 FishingProject/__pycache__
 apps/authentication/__pycache__
 apps/authentication/migrations/__pycache__
+.vscode

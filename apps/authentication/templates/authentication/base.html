@@ -8,6 +8,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
+    <!-- Link for Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
     <!-- CSS link -->
     {% load static %}
     <link href="{% static 'authentication/css/auth.css' %}" rel="stylesheet" type="text/css"/>
@@ -15,9 +18,11 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
-    {% block content %}
+    <div class="container-fluid">
+      {% block content %}
 
-    {% endblock content %}
+      {% endblock content %}
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
