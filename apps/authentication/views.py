@@ -5,7 +5,7 @@ from django.contrib import messages
 
 
 def hello(request):
-    return render(request, "authentication/hello.html", context={})
+    return render(request, "hello.html", context={})
 
 
 def register_view(request):
@@ -16,7 +16,7 @@ def register_view(request):
         user = form.cleaned_data.get("username")
         messages.success(request, f"The account was created for {user}")
         return redirect("auth:login")
-    
+
     context = {"form": form}
     return render(request, "authentication/register.html", context)
 
@@ -24,7 +24,7 @@ def register_view(request):
 def login_view(request):
     if request.user.is_authenticated: # detect if user is logged in
         messages.info(request, "You're already logged in.")
-        return redirect("auth:hello")
+        return redirect("auth:home")
     
     if request.method == "POST":
         username = request.POST.get("username")
@@ -33,7 +33,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("auth:hello")
+            return redirect("auth:home")
         else:
             messages.error(request, "Username or password is incorrect.")
     context= {}

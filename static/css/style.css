@@ -1,0 +1,13 @@
+body {
+    background-color: #C4F3FD;
+}
+
+/* Navbar */
+#profile_dropdown {
+    color: rgb(114, 114, 114);
+}
+
+#profile_dropdown:hover {
+    color: rgb(78, 78, 78);
+}
+

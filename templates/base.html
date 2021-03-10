@@ -13,12 +13,42 @@
 
     <!-- CSS link -->
     {% load static %}
-    <link href="{% static 'authentication/css/auth.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static '/css/style.css' %}" rel="stylesheet" type="text/css"/>
     
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
-    <div class="container-fluid">
+    
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #048BA8;">
+      <div class="container-fluid">
+        
+        <a class="navbar-brand p-0"  href="{% url 'auth:home' %}">
+          <!--<img src="/static/fish.svg" alt="fish" height="50" width="50">-->
+        </a>
+
+        {% if not request.user.is_authenticated %}
+        <div class="d-flex">
+          <a href="{% url 'auth:login' %}"><button type="button" class="btn btn-outline-light btn-sm mx-2">Log in</button></a>
+          <a href="{% url 'auth:register' %}"><button type="button" class="btn btn-success btn-sm">Sign up</button></a>
+        </div>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <div class="dropdown d-flex">
+          <a class="" href="#" id="profile_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <h2 class="m-0"><i class="bi bi-person-circle"></i></h2>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end py-1" aria-labelledby="profile_dropdown">
+            <li><a class="dropdown-item px-2 py-1" href="#">Profile</a></li>
+            <li><a class="dropdown-item px-2 py-1" href="{% url 'auth:logout' %}">Log out</a></li>
+          </ul>
+        </div>
+        {% endif %}
+
+      </div>
+    </nav>
+    
+    <div class="container-fluid mt-4">
       {% block content %}
 
       {% endblock content %}
