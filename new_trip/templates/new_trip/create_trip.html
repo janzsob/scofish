@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Create a new Trip{% endblock %}
+
+
+{% block content %}
+
+<div class="row mx-1 mb-3 justify-content-center">
+    <div class="card px-1" style="width: 25rem;">
+        <h3 class="mt-3 mb-0 text-center">Create New Trip</h3>
+        <div class="card-body">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="row justify-content-center my-1">
+                <div class="col-sm-12">
+                    <label for="lakeInput" class="form-label mb-1">Lake</label>
+                    {{ trip_form.place }}
+                </div>
+            </div>
+            <div class="row justify-content-center my-3">
+                <div class="col-sm-12">
+                    <label class="form-label mb-1" for="StartingDate">Starting Date</label>
+                    <div class="input-group mb-1">
+                        {{ trip_form.s_date }}
+                        <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="form-label mb-1" for="EndingDate">Ending Date</label>
+                    <div class="input-group">
+                        {{ trip_form.e_date }}
+                        <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- fisherman formset -->
+            {{ formset.management_form }}
+            {% for fisherman in formset %}
+            <div class="row mb-1 align-items-center form-row">
+                <div class="col-sm-4">
+                    <label class="">Fisherman</label>
+                </div>
+                <div class="col-sm-8">
+                    {{ fisherman.name }}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Button for adding more fishermen -->
+            <div class="text-center">
+                <button class="btn add-form-row">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <hr>
+            <!-- form submit button -->
+            <input type="submit" class="btn btn-primary w-100" value="Submit">
+        </form>
+        </div> <!-- card body end -->
+    </div> <!--  card end -->
+</div> <!-- row end -->
+
+<!-- Script for adding more fishermen -->
+<script type="text/javascript">
+    
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+)');
+        var replacement = prefix + '-' + ndx;
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+    
+    function cloneMore(selector, prefix) {
+        var newElement = $(selector).clone(true);
+        var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        console.log(total);
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        });
+        newElement.find('label').each(function() {
+            var forValue = $(this).attr('for');
+            if (forValue) {
+                forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+                $(this).attr({'for': forValue});
+            }
+        });
+        total++;
+        $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+        var conditionRow = $('.form-row:not(:last)');
+        conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+        return false;
+    }
+    function deleteForm(prefix, btn) {
+        var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+        if (total > 1){
+            btn.closest('.form-row').remove();
+            var forms = $('.form-row');
+            $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+            for (var i=0, formCount=forms.length; i<formCount; i++) {
+                $(forms.get(i)).find(':input').each(function() {
+                    updateElementIndex(this, prefix, i);
+                });
+            }
+        }
+        return false;
+    }
+    $(document).on('click', '.add-form-row', function(e){
+        e.preventDefault();
+        cloneMore('.form-row:last', 'form');
+        return false;
+    });
+    $(document).on('click', '.remove-form-row', function(e){
+        e.preventDefault();
+        deleteForm('form', $(this));
+        return false;
+    });
+</script>
+
+
+{% endblock content %}

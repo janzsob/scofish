@@ -2,8 +2,8 @@
 {% block title %}Registration{% endblock %}
 {% block content %}
 
-<div class="row justify-content-center text-center">
-    <div class="card mt-2" style="width: 18rem;">
+<div class="row mx-1 mb-3 justify-content-center text-center">
+    <div class="card px-1" style="width: 18rem;">
         <h3 class="my-2">Sign up</h3>
         <div class="card-body">
             <form method="POST" action="">
@@ -43,10 +43,14 @@
             </div>
             {% endfor %}
 
-            <div class="alert m-0">
-                Already have an account? <a href="{% url 'auth:login' %}" class="alert-link">Log in</a>
-            </div>
-
+            <div class="row alert m-0">
+                <div class="col-sm-12">
+                    Already have an account?
+                </div>
+                <div class="col-sm-12">
+                    <a href="{% url 'auth:login' %}" class="alert-link">Log in</a>
+                </div>
+            </div> <!-- alert end -->
         </div><!--card body end-->
     </div><!--card end-->
 </div>

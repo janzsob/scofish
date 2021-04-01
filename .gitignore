@@ -1,5 +1,7 @@
 FishingProject/secret.py
 FishingProject/__pycache__
-apps/authentication/__pycache__
-apps/authentication/migrations/__pycache__
+authentication/__pycache__
+authentication/migrations/__pycache__
 .vscode
+new_trip/__pycache__
+new_trip/migrations/__pycache__
