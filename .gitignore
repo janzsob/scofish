@@ -5,3 +5,4 @@ authentication/migrations/__pycache__
 .vscode
 new_trip/__pycache__
 new_trip/migrations/__pycache__
+media/catch_images/

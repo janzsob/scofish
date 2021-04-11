@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="row mx-1 mb-3 justify-content-center">
+<div class="row mx-3 my-3 justify-content-center">
     <div class="card px-1" style="width: 25rem;">
         <h3 class="mt-3 mb-0 text-center">Create New Trip</h3>
         <div class="card-body">
@@ -12,8 +12,12 @@
             {% csrf_token %}
             <div class="row justify-content-center my-1">
                 <div class="col-sm-12">
-                    <label for="lakeInput" class="form-label mb-1">Lake</label>
-                    {{ trip_form.place }}
+                    <label for="LakeInput" class="form-label mb-1">Lake</label>
+                    {{ trip_form.lake }}
+                </div>
+                <div class="col-sm-12">
+                    <label for="CityInput" class="form-label mb-1">City</label>
+                    {{ trip_form.city }}
                 </div>
             </div>
             <div class="row justify-content-center my-3">

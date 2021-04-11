@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}New Catch{% endblock %}
+
+
+{% block content %}
+
+<div class="row mx-3 my-3 justify-content-center">
+    <div class="card px-1" style="width: 25rem;">
+        <a href="{{ request.META.HTTP_REFERER }}" style=" color:#000"> <!-- Button to get the previous page (Trip details) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x float-end mt-2 me-2" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </a>
+        <h3 class="mt-0 mb-0 text-center">New Catch</h3>
+        
+        <div class="card-body">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="row justify-content-center my-1">
+                <div class="col-sm-12">
+                    <label for="LakeInput" class="form-label mb-1">Fish Type</label>
+                    {% for error in form.fish_type.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-1">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+
+                    {{ form.fish_type }}
+                </div>
+                <div class="col-sm-12">
+                    <label for="CityInput" class="form-label mb-1">Weigth</label>
+                    {% for error in form.weight.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-1">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+
+                    {{ form.weight }}
+                </div>
+                <div class="col-sm-12">
+                    <label for="CityInput" class="form-label mb-1">Length</label>
+                    {% for error in form.length.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-1">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+
+                    {{ form.length }}
+                </div>
+                <div class="col-sm-12">
+                    <label for="" class="form-label mb-1">Fisherman</label>
+                    {% for error in form.fisherman.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-1">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+                    {{ form.fisherman }}
+                </div>
+                <div class="col-sm-12">
+                    <label for="" class="form-label mb-1">Image</label>
+                    {% for error in form.image.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-1">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+                    {{ form.image }}
+                </div>
+            </div>
+            <div class="row justify-content-center my-3">
+                <div class="col-sm-12">
+                    <label class="form-label mb-1" for="StartingDate">DateTime</label>
+                    {% for error in form.datetime.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-2">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+                    <div class="input-group mb-1">
+                        {{ form.datetime }}
+                        <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>         
+            
+            
+            <hr>
+            <!-- form submit button -->
+            <input type="submit" class="btn btn-primary w-100" value="Submit">
+        </form>
+        </div> <!-- card body end -->
+    </div> <!--  card end -->
+</div> <!-- row end -->
+
+{% endblock content %}

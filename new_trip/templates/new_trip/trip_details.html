@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Trip Details{% endblock %}
+
+
+{% block content %}
+<!-- Summary table about the trip -->
+<div class="card">
+    <div class="card-body p-1">
+        <div class="row text-center my-2">
+            <div class="col">City:</div>
+            <div class="col">{{ trip.city }}</div>
+            <div class="col">Lake:</div>
+            <div class="col">
+                {{ trip.lake }}
+            </div>    
+        </div>
+        <div class="row justify-content-center text-center">
+            <div class="col-4">
+                S. Date:
+            </div>
+            <div class="col-6">
+                {{ trip.s_date|date:"M. d, Y, H:i" }}
+            </div>
+        </div>
+        <div class="row justify-content-center text-center">
+            <div class="col-4">
+                E. Date:
+            </div>
+            <div class="col-6">
+                {{ trip.e_date|date:"M. d, Y, H:i" }}
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-12">
+                Participants:
+            </div>
+            {% for fisherman in fishermen %}
+            <div class="col text-center">
+                {{ fisherman.name }}
+            </div>
+            {% endfor %}
+        </div>
+    </div> <!-- card body end -->
+</div> <!-- card end -->
+
+<!-- Navigation for the trip -->
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn btn-success">🐟 Catch</button></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#"><button class="btn btn-info">📈 Statistics</button></a>
+    </li>
+  </ul>
+
+<div>
+    <ul>  
+    {% for catch in catches %}
+    <li>
+        {{catch.fisherman}}, {{ catch.fish_type }}, {{ catch.weight }}
+        <br>
+        {% if catch.image %}
+        <img src="{{ catch.image.url }}" width="220px" height="220px" alt="Fish">
+        {% endif %}
+    </li>
+    {% endfor %}      
+    </ul>
+</div>
+
+<!-- Modal - Recording new catch 
+<div class="modal fade" id="NewCatch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+                <div class="row justify-content-center my-1">
+                    <div class="col-sm-12">
+                        <label for="LakeInput" class="form-label mb-1">Fish Type</label>
+                        {{ catch_form.fish_type }}
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="CityInput" class="form-label mb-1">Weigth</label>
+                        {{ catch_form.weight }}
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="CityInput" class="form-label mb-1">length</label>
+                        {{ catch_form.length }}
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="" class="form-label mb-1">Fisherman</label>
+                        {{ catch_form.fisherman }}
+                    </div>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-sm-12">
+                        <label class="form-label mb-1" for="StartingDate">DateTime</label>
+                        <div class="input-group mb-1">
+                            {{ catch_form.datetime }}
+                            <span class="input-group-text">
+                                <i class="bi bi-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>         
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+-->
+{% endblock content %}

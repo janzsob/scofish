@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
-from .forms import TripsForm, FishermanFormset
+from .forms import TripsForm, FishermanFormset, CatchForm
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from .models import Trips, Fisherman, Catch
 
 
 def create_trip_view(request):
@@ -15,7 +17,7 @@ def create_trip_view(request):
                 user = formset_user.save(commit=False)
                 user.trip = trip
                 user.save()
-            return redirect("auth:home")
+            return redirect(reverse("new_trip:trip_details", args=(trip.trip_id,)))
     else:
         trip_form = TripsForm()
         formset = FishermanFormset()   
@@ -24,3 +26,70 @@ def create_trip_view(request):
         "formset": formset
     }
     return render(request, "new_trip/create_trip.html", context)
+
+
+class TripDetailView(DetailView):
+    model = Trips
+    template_name = "new_trip/trip_details.html"
+    context_object_name = "trip"
+
+    # get fishermen in the trip
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["fishermen"] = Fisherman.objects.filter(trip=self.kwargs.get('pk'))
+        context["catches"] = Catch.objects.filter(trip=self.kwargs.get('pk'))
+        #context["catch_form"] = CatchForm()
+        return context
+    """
+    For modal
+    def post(self, *args, **kwargs):
+        self.object = self.get_object(self.get_queryset())
+        catch_form = CatchForm(self.request.POST)
+        if catch_form.is_valid():
+            if catch_form.cleaned_data:
+                catch_form.instance.trip = self.object
+                catch_form.save()
+                return redirect(reverse("auth:home"))
+            else:
+                catch_form = CatchForm()
+    """             
+
+"""
+def new_catch(request):
+    if request.method == "POST":
+        catch_form = CatchForm(request.POST)
+        if catch_form.is_valid():
+            if catch_form.cleaned_data:
+                catch = catch_form.save()
+            return redirect(reverse("auth:home"))
+    else:   
+        catch_form = CatchForm()
+    context = {
+        "catch_form": catch_form,
+    }
+    return render(request, "new_trip/trip_details.html", context)
+"""
+
+
+class NewCatchView(CreateView):
+    model = Catch
+    form_class = CatchForm
+    template_name = "new_trip/new_catch.html"
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['fisherman'] = Fisherman.objects.filter(trip=self.kwargs.get('pk'))
+        return kwargs
+    
+    def form_valid(self, form):
+        form.instance.trip = Trips.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('new_trip:trip_details', args=(self.kwargs['pk'],))
+
+
+class CatchView(DetailView):
+    model = Catch
+    template_name = "new_trip/catch_details.html"
+    context_object_name = "catch"
