@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
-from .forms import TripsForm, FishermanFormset, CatchForm
+from .forms import TripsForm, CatchForm
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from .models import Trips, Fisherman, Catch
@@ -9,21 +9,16 @@ from .models import Trips, Fisherman, Catch
 def create_trip_view(request):
     if request.method == "POST":
         trip_form = TripsForm(request.POST)
-        formset = FishermanFormset(request.POST)
-        if trip_form.is_valid() and formset.is_valid():
+        if trip_form.is_valid():
             if trip_form.cleaned_data:
                 trip = trip_form.save()
-            for formset_user in formset:
-                user = formset_user.save(commit=False)
-                user.trip = trip
-                user.save()
+                #trip_form.save_m2m()
+            #return redirect(("auth:home"))
             return redirect(reverse("new_trip:trip_details", args=(trip.trip_id,)))
     else:
         trip_form = TripsForm()
-        formset = FishermanFormset()   
     context = {
         "trip_form": trip_form,
-        "formset": formset
     }
     return render(request, "new_trip/create_trip.html", context)
 
@@ -36,7 +31,7 @@ class TripDetailView(DetailView):
     # get fishermen in the trip
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fishermen"] = Fisherman.objects.filter(trip=self.kwargs.get('pk'))
+        #context["fishermen"] = Fisherman.objects.filter(trip=self.kwargs.get('pk'))
         context["catches"] = Catch.objects.filter(trip=self.kwargs.get('pk'))
         #context["catch_form"] = CatchForm()
         return context
@@ -78,7 +73,7 @@ class NewCatchView(CreateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['fisherman'] = Fisherman.objects.filter(trip=self.kwargs.get('pk'))
+        kwargs['fisherman'] = Fisherman.objects.filter(trips__trip_id=self.kwargs.get('pk'))
         return kwargs
     
     def form_valid(self, form):

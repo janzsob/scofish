@@ -39,9 +39,15 @@
                         </span>
                     </div>
                 </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <label for="LakeInput" class="form-label mb-1">Fisherman</label>
+                        {{ trip_form.fisherman }}
+                    </div>
+                </div>
             </div>
 
-            <!-- fisherman formset -->
+            <!-- fisherman formset 
             {{ formset.management_form }}
             {% for fisherman in formset %}
             <div class="row mb-1 align-items-center form-row">
@@ -53,8 +59,8 @@
                 </div>
             </div>
             {% endfor %}
-            
-            <!-- Button for adding more fishermen -->
+            -->
+            <!-- Button for adding more fishermen 
             <div class="text-center">
                 <button class="btn add-form-row">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
@@ -63,7 +69,7 @@
                     </svg>
                 </button>
             </div>
-            
+            -->
             <hr>
             <!-- form submit button -->
             <input type="submit" class="btn btn-primary w-100" value="Submit">

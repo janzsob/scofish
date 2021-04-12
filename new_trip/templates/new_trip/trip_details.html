@@ -34,9 +34,9 @@
             <div class="col-12">
                 Participants:
             </div>
-            {% for fisherman in fishermen %}
+            {% for fisherman in trip.fisherman.all %}
             <div class="col text-center">
-                {{ fisherman.name }}
+                {{ fisherman }}
             </div>
             {% endfor %}
         </div>

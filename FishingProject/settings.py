@@ -85,7 +85,7 @@ pg_password = os.environ.get("postgresgl_password")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Fishing_DB',
+        'NAME': 'Fishing_Project_DB',
         'USER': 'postgres',
         'PASSWORD': pg_password,
         'HOST': 'localhost',

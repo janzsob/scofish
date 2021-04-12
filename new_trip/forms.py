@@ -1,12 +1,12 @@
 from .models import Trips, Fisherman, Catch
-from django.forms.formsets import formset_factory
 from django import forms
 
 
 class TripsForm(forms.ModelForm):
+    fisherman = forms.ModelMultipleChoiceField(queryset=Fisherman.objects.all().exclude(user__username="admin"), widget=forms.SelectMultiple(attrs={'class': 'form-select'}))
     class Meta:
         model = Trips
-        fields = ["lake", "city", "s_date", "e_date"]
+        fields = ["lake", "city", "s_date", "e_date", "fisherman"]
         widgets = {
             "lake": forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'id': 'LakeInput',}),
             "city": forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'id': 'CityInput',}),
@@ -15,15 +15,6 @@ class TripsForm(forms.ModelForm):
         }
 
 
-class FishermanForm(forms.ModelForm):
-    class Meta:
-        model = Fisherman
-        fields = ["name"]
-        widgets = {
-            "name": forms.TextInput(attrs={'type': 'text', 'class': 'form-control my-1', 'id': 'FishermanInput',}),
-        }
-
-FishermanFormset = formset_factory(FishermanForm)
 
 class CatchForm(forms.ModelForm):
     fisherman = forms.ModelChoiceField(queryset= Fisherman.objects.all(), widget=forms.Select(attrs={'class': 'form-select'}))

@@ -1,4 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+
+class Fisherman(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    fisherman_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        verbose_name = "Fisherman"
+        verbose_name_plural = "Fishermen"
+
+    def __str__(self):
+        return self.user.username
+
 
 
 class Trips(models.Model):
@@ -6,6 +20,7 @@ class Trips(models.Model):
     city = models.CharField("City", max_length=100, blank=True)
     s_date = models.DateTimeField("Starting Date", auto_now=False, auto_now_add=False)
     e_date = models.DateTimeField("Ending Date", auto_now=False, auto_now_add=False)
+    fisherman = models.ManyToManyField(Fisherman)
     trip_id = models.AutoField(primary_key=True)    
 
     class Meta:
@@ -15,18 +30,6 @@ class Trips(models.Model):
     def __str__(self):
         return f"{self.lake}-{self.trip_id}-{self.s_date}"
 
-
-class Fisherman(models.Model):
-    name = models.CharField("Fisherman", max_length=50)
-    trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
-    fisherman_id = models.AutoField(primary_key=True)
-
-    class Meta:
-        verbose_name = "Fisherman"
-        verbose_name_plural = "Fishermen"
-
-    def __str__(self):
-        return f"{self.name}-{self.fisherman_id}"
 
 
 class Catch(models.Model):
