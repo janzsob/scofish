@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("authentication.urls")),
     path("", include("new_trip.urls")),
+    path("", include("trips_feed.urls")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

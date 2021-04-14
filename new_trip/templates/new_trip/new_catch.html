@@ -47,6 +47,16 @@
                     {% endfor %}
 
                     {{ form.length }}
+                    <div class="form-text my-1">Not required</div>
+                </div>
+                <div class="col-sm-12">
+                    <label for="" class="form-label mb-1">Hook Bait</label>
+                    {% for error in form.hook_bait.errors  %}
+                    <p class="text-danger fw-bold fst-italic mb-1">
+                        {{ error }}                            
+                    </p>
+                    {% endfor %}
+                    {{ form.hook_bait }}
                 </div>
                 <div class="col-sm-12">
                     <label for="" class="form-label mb-1">Fisherman</label>

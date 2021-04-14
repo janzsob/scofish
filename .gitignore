@@ -6,3 +6,5 @@ authentication/migrations/__pycache__
 new_trip/__pycache__
 new_trip/migrations/__pycache__
 media/catch_images/
+trips_feed/__pycache__
+trips_feed/migrations/__pycache__

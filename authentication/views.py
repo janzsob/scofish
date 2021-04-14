@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import CreateUserForm
 from django.contrib import messages
 
-
+"""
 def hello(request):
     return render(request, "hello.html", context={})
-
+"""
 
 def register_view(request):
     form = CreateUserForm(request.POST or None)
@@ -24,7 +24,7 @@ def register_view(request):
 def login_view(request):
     if request.user.is_authenticated: # detect if user is logged in
         messages.info(request, "You're already logged in.")
-        return redirect("auth:home")
+        return redirect("trips_feed:feed")
     
     if request.method == "POST":
         username = request.POST.get("username")
@@ -33,7 +33,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("auth:home")
+            return redirect("trips_feed:feed")
         else:
             messages.error(request, "Username or password is incorrect.")
     context= {}

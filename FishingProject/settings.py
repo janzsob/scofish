@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'new_trip',
+    'trips_feed',
 ]
 
 MIDDLEWARE = [

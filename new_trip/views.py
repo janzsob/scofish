@@ -12,8 +12,6 @@ def create_trip_view(request):
         if trip_form.is_valid():
             if trip_form.cleaned_data:
                 trip = trip_form.save()
-                #trip_form.save_m2m()
-            #return redirect(("auth:home"))
             return redirect(reverse("new_trip:trip_details", args=(trip.trip_id,)))
     else:
         trip_form = TripsForm()
@@ -71,15 +69,28 @@ class NewCatchView(CreateView):
     form_class = CatchForm
     template_name = "new_trip/new_catch.html"
     
+    # It lists those fishermen who attend at the trip
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['fisherman'] = Fisherman.objects.filter(trips__trip_id=self.kwargs.get('pk'))
         return kwargs
     
+    # It makes catch equal to the trip
     def form_valid(self, form):
-        form.instance.trip = Trips.objects.get(pk=self.kwargs['pk'])
+        current_trip = Trips.objects.get(pk=self.kwargs['pk'])
+        form.instance.trip = current_trip
+        
+        # to add weight of the new catch to the total weight in Trips
+        current_trip.total_catch_weight += form.instance.weight
+        current_trip.save()
+        
         return super().form_valid(form)
-
+    
+    """
+    def post(self, request, *args, **kwargs):
+        current_trip = Trips.objects.get(pk=self.kwargs['pk'])
+        current_trip.total_catch_weight += self.instance.weight
+    """
     def get_success_url(self):
         return reverse('new_trip:trip_details', args=(self.kwargs['pk'],))
 

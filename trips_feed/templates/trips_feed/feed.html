@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Feed{% endblock %}
+{% block content %}
+
+
+{% for trip in trips  %}
+    <a href="{% url 'new_trip:trip_details' trip.trip_id %}" class="text-decoration-none" style=" color:#000">
+    <div class="row justify-content-center mx-3 my-3">
+        <div class="card p-0" style="width: 28rem;">
+            <div class="card-body p-3">
+                <h5 class="fw-bold m-0">{{ trip.lake }}</h5>
+                <div class="row my-1">
+                <!-- If the starting date and ending date are the same then it shows only the strating one -->
+                <span class=""><small class="text-muted">{{ trip.s_date|date:"SHORT_DATE_FORMAT" }} 
+                {% if not trip.s_date|date:"SHORT_DATE_FORMAT" == trip.e_date|date:"SHORT_DATE_FORMAT" %}
+                - {{ trip.e_date|date:"SHORT_DATE_FORMAT" }}
+                {% endif %}
+                </small></span>
+                </div>
+            
+                <div class="row">
+                    <span>Total catch 🎣: {{ trip.total_catch_weight }} kg</span>
+                </div>
+                <!-- Showing whether trip is closed or in progress -->    
+                {% if current_date|date:"m/d/Y, H:s" > trip.e_date|date:"m/d/Y, H:s" %}
+                <span class="badge bg-danger float-end">Closed</span>
+                {% else %}
+                <span class="badge bg-success float-end">In progress</span>
+                {% endif %}                    
+                
+            </div>
+        </div>
+    </div>
+    </a>
+{% endfor %}
+    
+
+{% endblock content %}

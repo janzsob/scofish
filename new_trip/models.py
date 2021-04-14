@@ -21,7 +21,8 @@ class Trips(models.Model):
     s_date = models.DateTimeField("Starting Date", auto_now=False, auto_now_add=False)
     e_date = models.DateTimeField("Ending Date", auto_now=False, auto_now_add=False)
     fisherman = models.ManyToManyField(Fisherman)
-    trip_id = models.AutoField(primary_key=True)    
+    trip_id = models.AutoField(primary_key=True)
+    total_catch_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = "Trip"
@@ -32,11 +33,21 @@ class Trips(models.Model):
 
 
 
+fish_choices = [
+    ("Carp", "Carp"),
+    ("Amur", "Amur"),
+    ("Bream", "Bream"),
+    ("Crucian", "Crucian"),
+    ("Catfish", "Catfish"),
+]
+
+
 class Catch(models.Model):
-    fish_type = models.CharField("Fish Type", max_length=50)
+    fish_type = models.CharField("Fish Type", max_length=50, choices=fish_choices, default="Carp")
     catch_id = models.AutoField(primary_key=True)
     weight = models.DecimalField("Weight", max_digits=5, decimal_places=2)
     length = models.DecimalField("Length", max_digits=5, decimal_places=2, blank=True, null=True)
+    hook_bait = models.CharField("Hook Bait", max_length=100)
     datetime = models.DateTimeField("Catch Time", auto_now=False, auto_now_add=False)
     image = models.ImageField(null=True, blank=True, upload_to="catch_images/")
     fisherman = models.ForeignKey(Fisherman, on_delete=models.CASCADE)

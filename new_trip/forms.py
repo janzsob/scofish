@@ -20,12 +20,14 @@ class CatchForm(forms.ModelForm):
     fisherman = forms.ModelChoiceField(queryset= Fisherman.objects.all(), widget=forms.Select(attrs={'class': 'form-select'}))
     class Meta:
         model = Catch
-        fields = ["fish_type", "weight", "length", "image", "datetime", "fisherman"]
+        fields = ["fish_type", "weight", "length", "image", "datetime", "fisherman", "hook_bait","image"]
         widgets = {
-            "fish_type": forms.TextInput(attrs={'type': 'text', 'class': 'form-control'}),
+            "fish_type": forms.Select(attrs={'class': 'form-select'}),
             "weight": forms.NumberInput(attrs={'type': 'text', 'class': 'form-control', 'step': '0.01'}),
             "length": forms.NumberInput(attrs={'type': 'text', 'class': 'form-control'}),
+            "hook_bait": forms.TextInput(attrs={'type': 'text', 'class': 'form-control'}),
             "datetime": forms.DateTimeInput(format='%Y-%m-%d %H:%M', attrs={'class':'datetimefield form-control'}),
+            "image": forms.FileInput(attrs={'class': 'form-control'})
         }
 
     def __init__(self, *args, **kwargs):
