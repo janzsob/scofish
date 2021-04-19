@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'authentication',
     'new_trip',
     'trips_feed',
+    'catch_details',
+    'stats',
 ]
 
 MIDDLEWARE = [

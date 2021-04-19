@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Catch Details{% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-center mx-3 my-3">
+    <div class="card px-3" style="width: 28rem;">
+        <a href="{{ request.META.HTTP_REFERER }}" style=" color:#000"> <!-- Button to get the previous page (Trip details) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x float-end mb-2 mt-2" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </a>
+        {% if catch.image %}
+            <img src="{{ catch.image.url }}" class="card-img-top" alt="Fish">        
+        {% endif %}
+        <div>
+            
+        </div>
+        <div class="card-body px-1 py-2">
+            <h5 class="card-title">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
+            <div>
+            <h6 class="m-0">🧍 {{ catch.fisherman }}</h6>
+            </div>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item py-2 px-0 fst-italic"><small>Hook Bait: </small>{{ catch.hook_bait }}</li>
+        </ul>
+            
+        <small class="text-muted py-2">{{ catch.datetime|date:"m/d/Y, H:s" }}</small> 
+        
+    </div> <!-- Card end -->
+</div> <!-- row end-->
+
+
+
+
+{% endblock content %}

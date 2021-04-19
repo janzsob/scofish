@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView
 from .models import Trips, Fisherman, Catch
 
 
+
 def create_trip_view(request):
     if request.method == "POST":
         trip_form = TripsForm(request.POST)
@@ -26,13 +27,13 @@ class TripDetailView(DetailView):
     template_name = "new_trip/trip_details.html"
     context_object_name = "trip"
 
-    # get fishermen in the trip
+    # get catches in the trip
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #context["fishermen"] = Fisherman.objects.filter(trip=self.kwargs.get('pk'))
-        context["catches"] = Catch.objects.filter(trip=self.kwargs.get('pk'))
-        #context["catch_form"] = CatchForm()
+        context["catches"] = Catch.objects.filter(trip=self.kwargs.get('pk')).order_by('datetime')
+
         return context
+
     """
     For modal
     def post(self, *args, **kwargs):
@@ -75,27 +76,57 @@ class NewCatchView(CreateView):
         kwargs['fisherman'] = Fisherman.objects.filter(trips__trip_id=self.kwargs.get('pk'))
         return kwargs
     
-    # It makes catch equal to the trip
     def form_valid(self, form):
+        # It makes catch equal to the trip
         current_trip = Trips.objects.get(pk=self.kwargs['pk'])
         form.instance.trip = current_trip
-        
+
         # to add weight of the new catch to the total weight in Trips
         current_trip.total_catch_weight += form.instance.weight
         current_trip.save()
+
+        # It adds cacth to the Fishermen total cacthes
+        catcher = Fisherman.objects.get(fisherman_id=form.instance.fisherman_id) # by adding _id to the object, it gives the id
+        catcher.catch_sum_weight += form.instance.weight
+        catcher.save()
+
+        # number of catches in Trips
+        current_trip.num_of_fish += 1
+        current_trip.save()
+
+        # Fisherman.objects.get(user__username="Bence")
+        """
+        try:
+
+            if Fisherman.objects.get(user__username="Bence"):
+                current_trip.ben_catches += form.instance.weight
+                current_trip.save()
+        except:
+            ok = 0
         
+        try:
+            if Fisherman.objects.get(user__username="Maxi"):
+                current_trip.maxi_catches += form.instance.weight
+                current_trip.save()
+        except:
+            ok = 1
+        
+        try:
+            if Fisherman.objects.get(user__username="Attila"):
+                current_trip.attila_catches += form.instance.weight
+                current_trip.save()
+        except:
+            ok = 2
+        
+        try:
+            if Fisherman.objects.get(user__username="Dávid"):
+                current_trip.david_catches += form.instance.weight
+                current_trip.save()
+        except:
+            ok = 3
+        """
         return super().form_valid(form)
     
-    """
-    def post(self, request, *args, **kwargs):
-        current_trip = Trips.objects.get(pk=self.kwargs['pk'])
-        current_trip.total_catch_weight += self.instance.weight
-    """
     def get_success_url(self):
         return reverse('new_trip:trip_details', args=(self.kwargs['pk'],))
 
-
-class CatchView(DetailView):
-    model = Catch
-    template_name = "new_trip/catch_details.html"
-    context_object_name = "catch"

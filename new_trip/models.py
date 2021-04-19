@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Fisherman(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     fisherman_id = models.AutoField(primary_key=True)
+    catch_sum_weight = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = "Fisherman"
@@ -23,6 +24,11 @@ class Trips(models.Model):
     fisherman = models.ManyToManyField(Fisherman)
     trip_id = models.AutoField(primary_key=True)
     total_catch_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    num_of_fish = models.IntegerField(default=0)
+    maxi_catches = models.IntegerField(default=0)
+    ben_catches = models.IntegerField(default=0)
+    attila_catches = models.IntegerField(default=0)
+    david = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Trip"

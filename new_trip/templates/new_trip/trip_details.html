@@ -4,76 +4,80 @@
 
 {% block content %}
 <!-- Summary table about the trip -->
-<div class="card">
-    <div class="card-body p-1">
-        <div class="row text-center my-2">
-            <div class="col">City:</div>
-            <div class="col">{{ trip.city }}</div>
-            <div class="col">Lake:</div>
-            <div class="col">
-                {{ trip.lake }}
-            </div>    
-        </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-4">
-                Fishing Time::
+<div class="row justify-content-center m-0">
+    <div class="card font-monospace p-0" style="width: 30rem;">
+        <div class="card-body p-1">
+            <div class="row justify-content-center text-center my-1 mx-0" >
+                {% if trip.city %}
+                    <div class="col-3">City:</div>
+                    <div class="col-3"><span class="badge bg-secondary fs-6">{{ trip.city }}</span></div>                
+                {% endif %}
+                <div class="col-3">Lake:</div>
+                <div class="col-3"><span class="badge bg-secondary fs-6">{{ trip.lake }}</span></div>    
             </div>
-            <div class="col-6">
-                {{ trip.s_date|date:"m/d/Y, H:s" }}-{{ trip.s_date|date:"m/d/Y, H:s" }}
+            <div class="row justify-content-center text-center mx-0">
+                <div class="col" >
+                    {% if trip.s_date|date:"m/d/Y" == trip.e_date|date:"m/d/Y" %}
+                    <span class="">
+                        {{ trip.s_date|date:"m/d/Y, H:s" }} - {{ trip.e_date|date:"H:s" }}
+                    </span>
+                        
+                    {% else %}
+                    <div>
+                        {{ trip.s_date|date:"m/d/Y, H:s" }} 
+                    </div>
+                    <div>
+                        {{ trip.e_date|date:"m/d/Y, H:s" }}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-4">
-                S. Date:
+            <div class="row mx-0 my-1">
+                <div class="col">
+                    Fishermen:
+                </div>
+                {% for fisherman in trip.fisherman.all %}
+                <div class="col text-center fw-bold" >
+                    {{ fisherman }}
+                </div>
+                {% endfor %}
             </div>
-            <div class="col-6">
-                {{ trip.s_date|date:"m/d/Y, H:s" }}
-            </div>
-        </div>
-        <div class="row justify-content-center text-center">
-            <div class="col-4">
-                E. Date:
-            </div>
-            <div class="col-6">
-                {{ trip.e_date|date:"M. d, Y, H:i" }}
-            </div>
-        </div>
-        <div class="row my-2">
-            <div class="col-12">
-                Participants:
-            </div>
-            {% for fisherman in trip.fisherman.all %}
-            <div class="col text-center">
-                {{ fisherman }}
-            </div>
-            {% endfor %}
-        </div>
-    </div> <!-- card body end -->
-</div> <!-- card end -->
+        </div> <!-- card body end -->
+    </div> <!-- card end -->
+</div> <!-- row end -->
 
 <!-- Navigation for the trip -->
-<ul class="nav justify-content-center">
+<ul class="nav justify-content-center my-1">
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn btn-success">🐟 Catch</button></a>
+      <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn btn-success">🎣 Catch</button></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#"><button class="btn btn-info">📈 Statistics</button></a>
+      <a class="nav-link" href="{% url 'stats:trip_stat' trip.trip_id %}"><button class="btn btn-info">📈 Statistics</button></a>
     </li>
   </ul>
 
-<div>
-    <ul>  
-    {% for catch in catches %}
-    <li>
-        {{catch.fisherman}}, {{ catch.fish_type }}, {{ catch.weight }}
-        <br>
-        {% if catch.image %}
-        <img src="{{ catch.image.url }}" width="220px" height="220px" alt="Fish">
-        {% endif %}
-    </li>
-    {% endfor %}      
-    </ul>
-</div>
+{% for catch in catches %}
+        <div class="row justify-content-center mx-1 my-2">
+            <div class="card p-0 rounded-pill" style="width: 28rem;">
+                <div class="card-body p-2">
+                    <div class="row justify-content-center mt-1">
+                        🐟 {{ catch.fish_type }}, {{ catch.weight }} kg
+                    </div>
+                    <div class="row mt-1 ">
+                        <div class="col-8">
+                            <span class="mx-3 fst-italic align-middle"><small class="text-muted">{{catch.fisherman}}, {{ catch.datetime|date:"m/d - H:s" }}</small></span>
+                        </div>
+                        <div class="col-4">
+                            <a href="{% url 'catch_details:catch' catch.catch_id %}" class="float-end mx-3"><button class="btn btn-primary btn-sm rounded-pill">Details</button></a>
+                        </div>
+                    </div>
+                        
+                    
+                </div>
+            </div>
+        </div>
+{% endfor %}
+    
 
 <!-- Modal - Recording new catch 
 <div class="modal fade" id="NewCatch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

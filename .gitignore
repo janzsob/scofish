@@ -8,3 +8,7 @@ new_trip/migrations/__pycache__
 media/catch_images/
 trips_feed/__pycache__
 trips_feed/migrations/__pycache__
+catch_details/__pycache__
+catch_details/migrations/__pycache__
+stats/__pycache__
+stats/migrations/__pycache__
