@@ -1,0 +1,1 @@
+web: gunicorn FishingProject.wsgi --log-file -
