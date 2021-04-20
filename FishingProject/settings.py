@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from .secret import secret_key
+#from .secret import secret_key
 import sys
 import django_heroku
 import dj_database_url
