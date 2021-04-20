@@ -94,37 +94,6 @@ class NewCatchView(CreateView):
         current_trip.num_of_fish += 1
         current_trip.save()
 
-        # Fisherman.objects.get(user__username="Bence")
-        """
-        try:
-
-            if Fisherman.objects.get(user__username="Bence"):
-                current_trip.ben_catches += form.instance.weight
-                current_trip.save()
-        except:
-            ok = 0
-        
-        try:
-            if Fisherman.objects.get(user__username="Maxi"):
-                current_trip.maxi_catches += form.instance.weight
-                current_trip.save()
-        except:
-            ok = 1
-        
-        try:
-            if Fisherman.objects.get(user__username="Attila"):
-                current_trip.attila_catches += form.instance.weight
-                current_trip.save()
-        except:
-            ok = 2
-        
-        try:
-            if Fisherman.objects.get(user__username="Dávid"):
-                current_trip.david_catches += form.instance.weight
-                current_trip.save()
-        except:
-            ok = 3
-        """
         return super().form_valid(form)
     
     def get_success_url(self):

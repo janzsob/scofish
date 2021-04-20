@@ -25,10 +25,6 @@ class Trips(models.Model):
     trip_id = models.AutoField(primary_key=True)
     total_catch_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     num_of_fish = models.IntegerField(default=0)
-    maxi_catches = models.IntegerField(default=0)
-    ben_catches = models.IntegerField(default=0)
-    attila_catches = models.IntegerField(default=0)
-    david = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Trip"

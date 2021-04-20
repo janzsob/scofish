@@ -24,7 +24,6 @@ class StatView(DetailView):
         num_catches = Catch.objects.filter(trip=self.kwargs.get('pk')).count()
         max_weight = Catch.objects.filter(trip=self.kwargs.get('pk')).order_by('-weight')[0:1]
 
-        trip_catches = Trips.objects.get(trip_id=self.kwargs.get('pk'))
 
         context = {
             "fishermen": fishermen,
@@ -32,7 +31,6 @@ class StatView(DetailView):
             "avg_weight": avg_weigth["av_weight"],
             "max_weight": max_weight,
             "num_catches": num_catches,
-            "trip_catches": trip_catches,
         }
         return context 
 
