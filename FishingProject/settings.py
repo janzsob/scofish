@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '4+bleq9##j6vjl=v#46!pwg_ley+(@z5=-*hgi%b#aq&d+v2v='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['scofish.herokuapp.com', '127.0.0.1']
 
