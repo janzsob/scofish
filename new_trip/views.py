@@ -4,10 +4,10 @@ from .forms import TripsForm, CatchForm
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from .models import Trips, Fisherman, Catch
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
 
 
-@login_required
+#@login_required
 def create_trip_view(request):
     if request.method == "POST":
         trip_form = TripsForm(request.POST)
@@ -65,7 +65,7 @@ def new_catch(request):
     return render(request, "new_trip/trip_details.html", context)
 """
 
-@login_required
+#@login_required
 class NewCatchView(CreateView):
     model = Catch
     form_class = CatchForm
