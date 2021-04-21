@@ -29,7 +29,7 @@
                     {{ form.fish_type }}
                 </div>
                 <div class="col-sm-12">
-                    <label for="CityInput" class="form-label mb-1">Weigth</label>
+                    <label for="CityInput" class="form-label mb-1">Weigth(kg)</label>
                     {% for error in form.weight.errors  %}
                     <p class="text-danger fw-bold fst-italic mb-1">
                         {{ error }}                            
@@ -39,7 +39,7 @@
                     {{ form.weight }}
                 </div>
                 <div class="col-sm-12">
-                    <label for="CityInput" class="form-label mb-1">Length</label>
+                    <label for="CityInput" class="form-label mb-1">Length(cm)</label>
                     {% for error in form.length.errors  %}
                     <p class="text-danger fw-bold fst-italic mb-1">
                         {{ error }}                            
