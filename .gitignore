@@ -12,3 +12,4 @@ catch_details/__pycache__
 catch_details/migrations/__pycache__
 stats/__pycache__
 stats/migrations/__pycache__
+FishingProject/.env

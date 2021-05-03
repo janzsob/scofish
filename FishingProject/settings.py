@@ -17,7 +17,9 @@ import sys
 import django_heroku
 import dj_database_url
 from decouple import config
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,11 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-SECRET_KEY = '4+bleq9##j6vjl=v#46!pwg_ley+(@z5=-*hgi%b#aq&d+v2v='
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+""" CHANGE IT IN PRODUCTION! """
 DEBUG = False
 
 ALLOWED_HOSTS = ['scofish.herokuapp.com', '127.0.0.1']
@@ -46,11 +48,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication',
-    'new_trip',
-    'trips_feed',
-    'catch_details',
-    'stats',
+    'authentication', # app
+    'new_trip', # app
+    'trips_feed', # app
+    'catch_details', # app
+    'stats', # app
     'storages',
 ]
 
@@ -161,10 +163,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 
 # for heroku deployment
+""" CHANGE IT IN PRODUCTION! """
 django_heroku.settings(locals())
 
 
 #S3 BUCKETS CONFIG (deployment)
+""" CHANGE IT IN PRODUCTION! """
 
 AWS_ACCESS_KEY_ID = 'AKIAU3UJGCF7ASABZREK'
 AWS_SECRET_ACCESS_KEY = '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'
