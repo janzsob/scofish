@@ -27,10 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = '4+bleq9##j6vjl=v#46!pwg_ley+(@z5=-*hgi%b#aq&d+v2v='
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['scofish.herokuapp.com', '127.0.0.1']
 
@@ -54,7 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -94,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Fishing_Project_DB',
         'USER': 'postgres',
-        'PASSWORD': '1427Lapat',
+        'PASSWORD': pg_password,
         'HOST': 'localhost',
         "PORT": "5432",
     }
@@ -142,21 +144,27 @@ USE_TZ = True
 # when login required is activated
 LOGIN_URL = "auth:login"
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'), # to find that static folder that aren't tied to a particular app
 )
+
+# in production
+if DEBUG == False:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEADIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
+
 # for heroku deployment
 django_heroku.settings(locals())
 
-#S3 BUCKETS CONFIG
+
+#S3 BUCKETS CONFIG (deployment)
 
 AWS_ACCESS_KEY_ID = 'AKIAU3UJGCF7ASABZREK'
 AWS_SECRET_ACCESS_KEY = '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'
