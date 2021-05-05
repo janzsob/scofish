@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Feed{% endblock %}
+{% block title %}Scofish{% endblock %}
 {% block content %}
 
 
@@ -19,14 +19,14 @@
                 </div>
                 
                 <div class="">
-                    🎣 Total catch: <span class="badge bg-primary rounded-pill">{{ trip.total_catch_weight }}</span> kg   
+                    🎣 Összfogás: <span class="badge bg-primary rounded-pill">{{ trip.total_catch_weight }}</span> kg   
                 </div>
 
                 <!-- Showing whether trip is closed or in progress -->    
                 {% if current_date|date:"m/d/Y, H:s" > trip.e_date|date:"m/d/Y, H:i" %}
-                <span class="badge bg-danger float-end">Closed</span>
+                <span class="badge bg-danger float-end">Lezárult</span>
                 {% else %}
-                <span class="badge bg-success float-end">In progress</span>
+                <span class="badge bg-success float-end">Folyamatban</span>
                 {% endif %}                    
                 
             </div>

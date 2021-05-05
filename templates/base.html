@@ -14,6 +14,9 @@
     <!-- Flatpickr link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- script for Hungarian language -->
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/hu.js"></script>
     
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
@@ -43,15 +46,15 @@
         <!-- Log in and sign up button -->
         {% if not request.user.is_authenticated %}
         <div class="d-flex">
-          <a href="{% url 'auth:login' %}"><button type="button" class="btn btn-outline-light px-2 py-1 mx-2">Log in</button></a>
-          <a href="{% url 'auth:register' %}"><button type="button" class="btn btn-success px-2 py-1">Sign up</button></a>
+          <a href="{% url 'auth:login' %}"><button type="button" class="btn btn-outline-light px-2 py-1 mx-2">Belépés</button></a>
+          <a href="{% url 'auth:register' %}"><button type="button" class="btn btn-success px-2 py-1">Regisztráció</button></a>
         </div>
         {% endif %}
 
         <!-- For logged in user -->
         {% if request.user.is_authenticated %}
         <div class="d-flex">
-          <a href="{% url 'new_trip:create_trip' %}" class="mx-3"><button type="button" class="btn btn-success px-2 py-1">New Trip</button></a>
+          <a href="{% url 'new_trip:create_trip' %}" class="mx-3"><button type="button" class="btn btn-success px-2 py-1">Új Túra</button></a>
           
           <!-- Profile dropdown menü -->
           <div class="dropdown position-relative p-2">
@@ -62,8 +65,8 @@
                 </svg>
             </a>
             <ul class="dropdown-menu dropdown-menu-end py-1" aria-labelledby="profile_dropdown">
-              <li><a class="dropdown-item px-2 py-1" href="#">Profile</a></li>
-              <li><a class="dropdown-item px-2 py-1" href="{% url 'auth:logout' %}">Log out</a></li>
+              <li><a class="dropdown-item px-2 py-1" href="#">Profil</a></li>
+              <li><a class="dropdown-item px-2 py-1" href="{% url 'auth:logout' %}">Kilépés</a></li>
             </ul>
           </div>          
         </div> <!-- d-flex end -->
@@ -92,6 +95,7 @@
               disableMobile: true,
               time_24hr: true,
               position: 'auto',
+              locale: 'hu'
           });
       });
     </script>

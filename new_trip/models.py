@@ -36,11 +36,11 @@ class Trips(models.Model):
 
 
 fish_choices = [
-    ("Carp", "Carp"),
+    ("Ponty", "Ponty"),
     ("Amur", "Amur"),
-    ("Bream", "Bream"),
-    ("Crucian", "Crucian"),
-    ("Catfish", "Catfish"),
+    ("Keszeg", "Keszeg"),
+    ("Kárász", "Kárász"),
+    ("Harcsa", "Harcsa"),
 ]
 
 

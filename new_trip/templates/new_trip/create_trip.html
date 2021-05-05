@@ -11,23 +11,42 @@
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
             </svg>
         </a>
-        <h3 class="mt-0 mb-0 text-center">Create New Trip</h3>
+        <h3 class="mt-0 mb-1 text-center">Új Horgásztúra</h3>
         <div class="card-body">
         <form method="POST" action="">
             {% csrf_token %}
-            <div class="row justify-content-center my-1">
+            {{ trip_form.non_field_errors }}
+            <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
-                    <label for="LakeInput" class="form-label mb-1">Lake</label>
+                    <label for="LakeInput" class="form-label mb-1">Horgásztó:</label>
+                    {% for error in trip_form.lake.errors  %}
+                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                        HIBA: {{ error }}                            
+                    </p>
+                    {% endfor %}
                     {{ trip_form.lake }}
                 </div>
-                <div class="col-sm-12">
-                    <label for="CityInput" class="form-label mb-1">City</label>
-                    {{ trip_form.city }}
-                </div>
             </div>
-            <div class="row justify-content-center my-3">
+            <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
-                    <label class="form-label mb-1" for="StartingDate">Starting Date</label>
+                    <label for="CityInput" class="form-label mb-1">Település:</label>
+                    {% for error in trip_form.city.errors  %}
+                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                        HIBA: {{ error }}                            
+                    </p>
+                    {% endfor %}
+                    {{ trip_form.city }}
+                    <div class="form-text mt-1">Nem kötelező</div>
+                </div>
+            </div> <!-- Lake and City row end -->
+            <div class="row justify-content-center mb-2">
+                <div class="col-sm-12">
+                    <label class="form-label mb-1" for="StartingDate">Kezdő dátum:</label>
+                    {% for error in trip_form.s_date.errors  %}
+                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                        HIBA: {{ error }}                            
+                    </p>
+                    {% endfor %}
                     <div class="input-group mb-1">
                         {{ trip_form.s_date }}
                         <span class="input-group-text">
@@ -35,8 +54,15 @@
                         </span>
                     </div>
                 </div>
+            </div>
+            <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
-                    <label class="form-label mb-1" for="EndingDate">Ending Date</label>
+                    <label class="form-label mb-1" for="EndingDate">Záró dátum:</label>
+                    {% for error in trip_form.e_date.errors  %}
+                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                        HIBA: {{ error }}                            
+                    </p>
+                    {% endfor %}
                     <div class="input-group">
                         {{ trip_form.e_date }}
                         <span class="input-group-text">
@@ -44,13 +70,20 @@
                         </span>
                     </div>
                 </div>
+            </div> <!-- Dates row end -->
+            <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-                        <label for="LakeInput" class="form-label mb-1">Fisherman</label>
+                        <label for="LakeInput" class="form-label mb-1">Horgász(ok):</label>
+                        {% for error in trip_form.fisherman.errors  %}
+                        <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                            HIBA: {{ error }}                            
+                        </p>
+                        {% endfor %}
                         {{ trip_form.fisherman }}
                     </div>
                 </div>
-            </div>
+            </div> <!-- Fisherman row end -->
 
             <!-- fisherman formset 
             {{ formset.management_form }}
@@ -77,13 +110,13 @@
             -->
             <hr>
             <!-- form submit button -->
-            <input type="submit" class="btn btn-primary w-100" value="Submit">
+            <input type="submit" class="btn btn-primary w-100" value="Beküld">
         </form>
         </div> <!-- card body end -->
     </div> <!--  card end -->
 </div> <!-- row end -->
 
-<!-- Script for adding more fishermen -->
+<!-- Script for adding more fishermen 
 <script type="text/javascript">
     
     function updateElementIndex(el, prefix, ndx) {
@@ -145,6 +178,6 @@
         return false;
     });
 </script>
-
+-->
 
 {% endblock content %}

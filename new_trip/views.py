@@ -5,6 +5,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from .models import Trips, Fisherman, Catch
 #from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 #@login_required
@@ -66,10 +67,11 @@ def new_catch(request):
 """
 
 #@login_required
-class NewCatchView(CreateView):
+class NewCatchView(SuccessMessageMixin, CreateView):
     model = Catch
     form_class = CatchForm
     template_name = "new_trip/new_catch.html"
+    success_message = "Fogás rögzítve"
     
     # It lists those fishermen who attend at the trip
     def get_form_kwargs(self):

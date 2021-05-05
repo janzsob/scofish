@@ -7,29 +7,33 @@ class CreateUserForm(UserCreationForm): # Customizing UserCreationForm
     username = forms.CharField(max_length=50, widget=forms.TextInput(
         attrs={
             'class': 'form-control', 
-            'placeholder': 'Username...',
+            'placeholder': 'Felhasználónév...',
         }
     ))
     email = forms.EmailField(widget=forms.EmailInput(
         attrs={
             'class': 'form-control', 
-            'placeholder': 'Email...',
+            'placeholder': 'Email cím...',
         }
-    ))
+    ),
+    #error_messages={'invalid': 'Adjon meg egy érvényes email címet.'}
+    )
     password1 = forms.CharField(max_length=50, widget=forms.PasswordInput(
         attrs={
             'class': 'form-control', 
-            'placeholder': "Enter password...",
+            'placeholder': "Jelszó...",
         }
     ))
     password2 = forms.CharField(max_length=50, widget=forms.PasswordInput(
         attrs={
             'class': 'form-control', 
-            'placeholder': "Confirm password...",
+            'placeholder': "Jelszó megerősítése...",
         }
     ))
     
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+    
+
 

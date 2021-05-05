@@ -10,11 +10,11 @@ def hello(request):
 
 def register_view(request):
     form = CreateUserForm(request.POST or None)
-    
+    print(form.errors.as_data())
     if form.is_valid():
         form.save()
         user = form.cleaned_data.get("username")
-        messages.success(request, f"The account was created for {user}")
+        messages.success(request, f"Sikeres regisztráció.")
         return redirect("auth:login")
 
     context = {"form": form}
@@ -23,7 +23,7 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated: # detect if user is logged in
-        messages.info(request, "You're already logged in.")
+        messages.info(request, "Már be van jelentkezve.")
         return redirect("trips_feed:feed")
     
     if request.method == "POST":
@@ -35,7 +35,7 @@ def login_view(request):
             login(request, user)
             return redirect("trips_feed:feed")
         else:
-            messages.error(request, "Username or password is incorrect.")
+            messages.error(request, "A felhasználónév vagy a jelszó helytelen.")
     context= {}
     return render(request, "authentication/login.html", context)
 
