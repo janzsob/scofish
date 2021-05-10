@@ -23,6 +23,7 @@
             </tr>
             </thead>
             <tbody>
+            <!-- If there is no catch yet. -->
             {% if catches_num == 0 %}
             <tr>
                 <td>0</td>
@@ -56,6 +57,7 @@
             </tr>
             </thead>
             <tbody>
+            <!-- If there is no catch yet. -->
             {% if catches_num == 0 %}
             <tr>
                 <th scope="row"></th>
@@ -64,10 +66,10 @@
                 <td>0</td>
             </tr>
             {% else %}
-
             {% for fisherman in fishermen_catches %}
             <tr>
                 <th scope="row">
+                <!-- medals for the first 3 places -->
                 {% if forloop.counter == 1 %}
                     🥇
                 {% elif forloop.counter == 2 %}
@@ -80,10 +82,9 @@
                 </th>
                 <td>
                     {{ fisherman }}</td>
-                <td>{{ fisherman.sum_catch }}</td>
+                <td>{{ fisherman.sum_catch|default_if_none:0 }}</td> <!-- If value is None, it'll dipslay 0. -->
                 <td>{{ fisherman.num_catch }}</td>
             </tr>
-
             {% endfor %}
             {% endif %}
             </tbody>
@@ -103,6 +104,7 @@
             </tr>
             </thead>
             <tbody>
+                <!-- If there is no catch yet. -->
                 {% if catches_num == 0 %}
                 <tr>
                     <td>-</td>
@@ -118,9 +120,8 @@
                 {% endif %}
             </tbody>
         </table>
-    </div> <!-- style end -->
+    </div> 
 </div>
-
 
 
 {% endblock content %}

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from new_trip.models import Trips, Fisherman, Catch
-from django.db.models import Avg, Sum, Max, Count, Q
+from django.db.models import Avg, Sum, Max, Count, Q, F
 
 
 class StatView(DetailView):
@@ -27,14 +27,9 @@ class StatView(DetailView):
         # aggregating fishermen's catches in the trip.
         # Annoteting is being used for summorizing and counting catches. 
         context["fishermen_catches"] = Fisherman.objects.filter(
-            trips=self.kwargs.get('pk')).annotate(sum_catch=Sum("catch__weight", distinct=True, filter=Q(catch__trip=self.kwargs.get('pk'))),
-            num_catch=Count("catch__catch_id", distinct=True, filter=Q(catch__trip=self.kwargs.get('pk')))).order_by('-sum_catch')
+            trips=self.kwargs.get('pk')).annotate(sum_catch=Sum("catch__weight", filter=Q(catch__trip=self.kwargs.get('pk'))),
+            num_catch=Count("catch__catch_id", distinct=True, filter=Q(catch__trip=self.kwargs.get('pk')))).order_by(F('sum_catch').desc(nulls_last=True))# order by: descending order, None values go to the last.
         
-        #print(fishermen_catches_sum[0].sum_catch)
-        #min_max = Fisherman.objects.filter(trips=self.kwargs.get('pk')).annotate(min_catch=Min("catch__weight"), max_catch=Max("catch__weight"))
-        #print(min_max[0].max_catch)
-        #avg_catches = Trips.objects.aggregate(avg_c=Avg("catch__weight"))
-        #print(avg_catches)
         return context 
 
 
