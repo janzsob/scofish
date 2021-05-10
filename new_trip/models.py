@@ -41,6 +41,7 @@ fish_choices = [
     ("Keszeg", "Keszeg"),
     ("Kárász", "Kárász"),
     ("Harcsa", "Harcsa"),
+    ("Tok", "Tok"),
 ]
 
 

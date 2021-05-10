@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Trip Details{% endblock %}
+{% block title %}Scofish - Horgásztúra{% endblock %}
 
 
 {% block content %}
@@ -49,15 +49,14 @@
 <!-- Navigation for the trip -->
 <ul class="nav justify-content-center my-1">
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn btn-success">🎣 Új fogás</button></a>
+        <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn btn-success">🎣 Új fogás</button></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'stats:trip_stat' trip.trip_id %}"><button class="btn btn-info">📈 Statisztika</button></a>
+        <a class="nav-link" href="{% url 'stats:trip_stat' trip.trip_id %}"><button class="btn btn-info">📈 Statisztika</button></a>
     </li>
-  </ul>
+</ul>
 
 <div class="row justify-content-center text-center mx-5">
-
     <!-- catch was recorded message -->
     {% if messages %}
         {% for message in messages %}
