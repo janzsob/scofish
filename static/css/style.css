@@ -1,12 +1,53 @@
 body {
     background-color: #f1f0f0;
     font-family: 'Chakra Petch', sans-serif;
+    padding-top: 54px; /*it is needed because I use fixed-top navbar*/
 }
 
 
-/* Navbar */
-.navbar {
-    /*background-color: #048BA8;*/
-    background-color: #2F323A;
+/* Swipping Navbar */
+.sidebar, .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0; /* navbar and overlay are covering the whole screen */
 }
 
+.sidebar {
+    left: -100%;
+    max-width: 210px;
+    transition: all ease 0.25s;
+    overflow-y: auto;
+    z-index: 1032;
+}
+
+.overlay {
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    /*background-color: rgba(47, 50, 58, 0.75);*/
+    visibility: hidden;
+    z-index: 1031;
+}
+
+.main-navigation.active .sidebar {
+    left: 0;
+}
+.main-navigation.active .overlay {
+    visibility: visible;
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        /*flex-direction: row;*/
+        max-width: 100%;
+        transform: none;
+        transition: none;
+        overflow-y: visible;
+        z-index: auto;
+    }
+}

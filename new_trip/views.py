@@ -4,11 +4,12 @@ from .forms import TripsForm, CatchForm
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from .models import Trips, Fisherman, Catch
-#from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-#@login_required
+@login_required
 def create_trip_view(request):
     if request.method == "POST":
         trip_form = TripsForm(request.POST)
@@ -50,24 +51,8 @@ class TripDetailView(DetailView):
                 catch_form = CatchForm()
     """             
 
-"""
-def new_catch(request):
-    if request.method == "POST":
-        catch_form = CatchForm(request.POST)
-        if catch_form.is_valid():
-            if catch_form.cleaned_data:
-                catch = catch_form.save()
-            return redirect(reverse("auth:home"))
-    else:   
-        catch_form = CatchForm()
-    context = {
-        "catch_form": catch_form,
-    }
-    return render(request, "new_trip/trip_details.html", context)
-"""
 
-#@login_required
-class NewCatchView(SuccessMessageMixin, CreateView):
+class NewCatchView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Catch
     form_class = CatchForm
     template_name = "new_trip/new_catch.html"
@@ -101,4 +86,5 @@ class NewCatchView(SuccessMessageMixin, CreateView):
     
     def get_success_url(self):
         return reverse('new_trip:trip_details', args=(self.kwargs['pk'],))
+
 

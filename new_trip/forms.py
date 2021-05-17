@@ -31,6 +31,6 @@ class CatchForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        fisherman = kwargs.pop('fisherman')
+        fisherman = kwargs.pop('fisherman')# it is the view def get_form_kwargs(self)
         super().__init__(*args, **kwargs)
         self.fields['fisherman'].queryset = fisherman

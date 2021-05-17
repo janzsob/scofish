@@ -33,49 +33,57 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light p-2">
-      <div class="container-fluid px-2">
-        <!-- Home button -->
-        <a class="navbar-brand position-relative p-2"  href="{% url 'trips_feed:feed' %}" >
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house position-absolute top-50 start-50 translate-middle" viewBox="0 0 16 16" style="color: white;">
-              <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-            </svg>
-        </a>
-        
-        <!-- Log in and sign up button -->
-        {% if not request.user.is_authenticated %}
-        <div class="d-flex">
-          <a href="{% url 'auth:login' %}"><button type="button" class="btn btn-outline-light px-2 py-1 mx-2">Belépés</button></a>
-          <a href="{% url 'auth:register' %}"><button type="button" class="btn btn-success px-2 py-1">Regisztráció</button></a>
+    <nav class="navbar navbar-expand-lg navbar-dark py-1 fixed-top main-navigation" style="background-color: #2F323A;">
+      <div class="container-fluid">
+        <a class="navbar-brand order-2 order-lg-1 me-auto me-lg-2 ms-1 ms-lg-0 p-2" href="{% url 'trips_feed:feed' %}">Scofish</a>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- overlay -->
+        <div class="overlay d-flex d-lg-none"></div>
+
+        <div class="order-lg-2 d-flex flex-column flex-lg-row w-100 bp-3 pb-lg-0 sidebar" style="background-color: #2F323A;">
+          <ul class="navbar-nav me-lg-auto mt-2 mt-lg-0 mx-3 mx-lg-0 order-2 order-lg-1">
+
+            <li class="nav-item">
+              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'trips_feed:feed' %}">Főoldal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'new_trip:create_trip' %}">Új Túra</a>
+            </li>
+          </ul> <!-- Left navbar-nav end -->
+
+          <ul class="navbar-nav mt-2 mt-lg-0 mx-3 mx-lg-0 order-1 order-lg-2">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown order-lg-3 pt-2 p-lg-0">
+              <a class="nav-link px-3 px-lg-2 py-1 dropdown-toggle active fst-italic fs-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{request.user.username}}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Profil</a></li>
+                <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Kilépés</a></li>
+              </ul>
+            </li>
+            {% endif %}
+            
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item order-lg-3 mt-2 m-lg-0">
+              <a class="nav-link px-3 px-lg-2 py-1 py-lg-2 active" href="{% url 'auth:register' %}">Regisztráció</a>
+            </li>
+            <li class="nav-item order-lg-4 mb-2 m-lg-0">
+              <a class="nav-link px-3 px-lg-2 py-1 py-lg-2 active" href="{% url 'auth:login' %}">Belépés</a>
+            </li>
+            {% endif %}
+          </ul> <!-- Right navbar-nav end -->
+
         </div>
-        {% endif %}
-
-        <!-- For logged in user -->
-        {% if request.user.is_authenticated %}
-        <div class="d-flex">
-          <a href="{% url 'new_trip:create_trip' %}" class="mx-3"><button type="button" class="btn btn-success px-2 py-1">Új Túra</button></a>
-          
-          <!-- Profile dropdown menü -->
-          <div class="dropdown position-relative p-2">
-            <a class="position-absolute top-50 start-50 translate-middle" href="#" id="profile_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: white;">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                </svg>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end py-1" aria-labelledby="profile_dropdown">
-              <li><a class="dropdown-item px-2 py-1" href="#">Profil</a></li>
-              <li><a class="dropdown-item px-2 py-1" href="{% url 'auth:logout' %}">Kilépés</a></li>
-            </ul>
-          </div>          
-        </div> <!-- d-flex end -->
-        {% endif %}
-
-      </div> <!-- container end -->
-    </nav>
+        <!--
+        <a class="btn btn-success btn-sm navbar-brand order-3 order-lg-2 py-0 px-1 me-2" href="{% url 'new_trip:create_trip' %}">Új Túra</a>
+          -->
+      </div>
+    </nav> <!-- navbar end -->
     
-    <div class="container-fluid p-0">
+    <div class="container-fluid px-2">
       {% block content %}
 
       {% endblock content %}
@@ -100,5 +108,9 @@
       });
     </script>
     
+    <!-- Swiped-events -->
+    <script src="/static/js/swiped-events.js"></script>
+    <!-- JS code for navbar -->
+    <script src="/static/js/script.js"></script>
   </body>
 </html>
