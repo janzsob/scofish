@@ -38,6 +38,13 @@
                     {{ message }}
                 </div>
                 {% endif %}
+                <!-- need to be logged in -->
+                {% if message.tags == "info" %}
+                <div class="alert alert-info my-3 p-1" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+
                 {% endfor %}
             {% endif %}
             

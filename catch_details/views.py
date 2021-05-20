@@ -1,10 +1,11 @@
 from django.shortcuts import render, reverse
-from new_trip.models import Catch, Fisherman
+from new_trip.models import Catch, Fisherman, Trips
 from django.views.generic.detail import DetailView
 from django.views.generic import UpdateView, DeleteView
 from new_trip.forms import CatchForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 class CatchView(DetailView):
@@ -47,6 +48,17 @@ class CatchDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMix
         if self.request.user == catch.fisherman.user:
             return True
         return False
-    
+
+    def delete(self, request, *args, **kwargs):
+        # delete catch weight from the total_catch_weigt instance
+        catch = self.get_object()
+        current_trip = Trips.objects.get(trip_id=catch.trip_id)
+        current_trip.total_catch_weight -= catch.weight
+        current_trip.save()
+
+        # success message for deleting catch
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse('new_trip:trip_details', args=(self.object.trip_id,))

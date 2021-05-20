@@ -12,7 +12,7 @@ class Fisherman(models.Model):
         verbose_name_plural = "Fishermen"
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username}'
 
 
 
@@ -24,14 +24,13 @@ class Trips(models.Model):
     fisherman = models.ManyToManyField(Fisherman)
     trip_id = models.AutoField(primary_key=True)
     total_catch_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    num_of_fish = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Trip"
         verbose_name_plural = "Trips"
 
     def __str__(self):
-        return f"{self.lake}-{self.trip_id}-{self.s_date}"
+        return f"{self.lake} - {self.trip_id} - {self.s_date.strftime('%Y/%m/%d')}"
 
 
 
@@ -61,4 +60,4 @@ class Catch(models.Model):
         verbose_name_plural = "Catches"
 
     def __str__(self):
-        return f"{self.fish_type}-{self.catch_id}"
+        return f"{self.fish_type} - {self.catch_id} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"

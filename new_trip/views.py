@@ -6,23 +6,28 @@ from django.views.generic.edit import CreateView
 from .models import Trips, Fisherman, Catch
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import UpdateView, DeleteView
 
 
-@login_required
+#@login_required
 def create_trip_view(request):
-    if request.method == "POST":
-        trip_form = TripsForm(request.POST)
-        if trip_form.is_valid():
-            if trip_form.cleaned_data:
-                trip = trip_form.save()
-            return redirect(reverse("new_trip:trip_details", args=(trip.trip_id,)))
+    if not request.user.is_authenticated:
+            messages.info(request, 'Jelentkezz be az új túra létrehozásához.')
+            return redirect("auth:login")
     else:
-        trip_form = TripsForm()
-    context = {
-        "trip_form": trip_form,
-    }
-    return render(request, "new_trip/create_trip.html", context)
+        if request.method == "POST":
+            trip_form = TripsForm(request.POST)
+            if trip_form.is_valid():
+                if trip_form.cleaned_data:
+                    trip = trip_form.save()
+                return redirect(reverse("new_trip:trip_details", args=(trip.trip_id,)))
+        else:
+            trip_form = TripsForm()
+        context = {
+            "form": trip_form,
+        }
+        return render(request, "new_trip/create_trip.html", context)
 
 
 class TripDetailView(DetailView):
@@ -78,13 +83,42 @@ class NewCatchView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         catcher.catch_sum_weight += form.instance.weight
         catcher.save()
 
-        # number of catches in Trips
-        current_trip.num_of_fish += 1
-        current_trip.save()
-
         return super().form_valid(form)
     
     def get_success_url(self):
         return reverse('new_trip:trip_details', args=(self.kwargs['pk'],))
 
 
+class TripUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+    model = Trips
+    form_class = TripsForm
+    template_name = "new_trip/create_trip.html"
+    success_message = "Horgásztúra módosítva."
+
+    # It limits that fishermen can only update the trips in which they are attending.
+    def test_func(self):
+        trip = self.get_object()
+        for u in trip.fisherman.all():
+            if self.request.user == u.user:
+                return True
+        return False
+
+    def get_success_url(self):
+        return reverse('new_trip:trip_details', args=(self.object.trip_id,))
+    
+"""
+class TripDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+    model = Trips
+    template_name = ""
+
+    # It limits that fishermen can only update the trips in which they are attending.
+    def test_func(self):
+        trip = self.get_object()
+        for u in trip.fisherman.all():
+            if self.request.user == u.user:
+                return True
+        return False
+
+    def get_success_url(self):
+        return reverse('trips_feed:feed')
+"""

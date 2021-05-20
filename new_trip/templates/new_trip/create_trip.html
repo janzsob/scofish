@@ -11,40 +11,40 @@
         <div class="card-body">
         <form method="POST" action="">
             {% csrf_token %}
-            {{ trip_form.non_field_errors }}
+            {{ form.non_field_errors }}
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label for="LakeInput" class="form-label mb-1">Horgásztó:</label>
-                    {% for error in trip_form.lake.errors  %}
+                    {% for error in form.lake.errors  %}
                     <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                         HIBA: {{ error }}                            
                     </p>
                     {% endfor %}
-                    {{ trip_form.lake }}
+                    {{ form.lake }}
                 </div>
             </div>
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label for="CityInput" class="form-label mb-1">Település:</label>
-                    {% for error in trip_form.city.errors  %}
+                    {% for error in form.city.errors  %}
                     <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                         HIBA: {{ error }}                            
                     </p>
                     {% endfor %}
-                    {{ trip_form.city }}
+                    {{ form.city }}
                     <div class="form-text mt-1">Nem kötelező</div>
                 </div>
             </div> <!-- Lake and City row end -->
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label class="form-label mb-1" for="StartingDate">Kezdő dátum:</label>
-                    {% for error in trip_form.s_date.errors  %}
+                    {% for error in form.s_date.errors  %}
                     <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                         HIBA: {{ error }}                            
                     </p>
                     {% endfor %}
                     <div class="input-group mb-1">
-                        {{ trip_form.s_date }}
+                        {{ form.s_date }}
                         <span class="input-group-text">
                             <i class="bi bi-calendar"></i>
                         </span>
@@ -54,13 +54,13 @@
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label class="form-label mb-1" for="EndingDate">Záró dátum:</label>
-                    {% for error in trip_form.e_date.errors  %}
+                    {% for error in form.e_date.errors  %}
                     <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                         HIBA: {{ error }}                            
                     </p>
                     {% endfor %}
                     <div class="input-group">
-                        {{ trip_form.e_date }}
+                        {{ form.e_date }}
                         <span class="input-group-text">
                             <i class="bi bi-calendar"></i>
                         </span>
@@ -71,12 +71,12 @@
                 <div class="col-sm-12">
                     <div class="col-sm-12">
                         <label for="LakeInput" class="form-label mb-1">Horgász(ok):</label>
-                        {% for error in trip_form.fisherman.errors  %}
+                        {% for error in form.fisherman.errors  %}
                         <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                             HIBA: {{ error }}                            
                         </p>
                         {% endfor %}
-                        {{ trip_form.fisherman }}
+                        {{ form.fisherman }}
                     </div>
                 </div>
             </div> <!-- Fisherman row end -->
