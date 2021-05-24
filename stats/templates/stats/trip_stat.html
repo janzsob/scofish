@@ -51,12 +51,14 @@
             <tbody>
             <!-- If there is no catch yet. -->
             {% if catches_num == 0 %}
+            {% for fisherman in fishermen_catches %}
             <tr>
                 <th scope="row"></th>
-                <td>-</td>
+                <td>{{ fisherman }}</td>
                 <td>0</td>
                 <td>0</td>
             </tr>
+            {% endfor %}
             {% else %}
             {% for fisherman in fishermen_catches %}
             <tr>

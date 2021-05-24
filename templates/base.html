@@ -60,7 +60,7 @@
                 {{request.user.username}}
               </a>
               <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Profil</a></li>
+                <!--<li><a class="dropdown-item" href="#">Profil</a></li>-->
                 <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Kilépés</a></li>
               </ul>
             </li>
@@ -73,19 +73,22 @@
             <li class="nav-item order-lg-4 mb-2 m-lg-0">
               <a class="nav-link px-3 px-lg-2 py-1 py-lg-2 active" href="{% url 'auth:login' %}">Belépés</a>
             </li>
-            {% endif %}
+            {% endif %}            
           </ul> <!-- Right navbar-nav end -->
-
+          
         </div>
-        <!--
-        <a class="btn btn-success btn-sm navbar-brand order-3 order-lg-2 py-0 px-1 me-2" href="{% url 'new_trip:create_trip' %}">Új Túra</a>
-          -->
+        <!-- It shows the user's ongoing trip -->
+        {% for trip in  request.user.fisherman.trips_set.all %}
+          {% if trip.is_active %}
+            <a class="btn btn-primary btn-sm navbar-brand order-3 order-lg-2 p-1 m-0  mx-lg-2" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Túra</a>
+          {% endif %}
+        {% endfor %}
       </div>
     </nav> <!-- navbar end -->
     
     <div class="container-fluid px-2">
       {% block content %}
-
+      
       {% endblock content %}
     </div>
 

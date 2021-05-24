@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Fisherman(models.Model):
@@ -25,6 +26,13 @@ class Trips(models.Model):
     trip_id = models.AutoField(primary_key=True)
     total_catch_weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
+    # it defines whether the trip is active or not.
+    @property
+    def is_active(self):
+        if self.e_date.strftime('%Y/%m/%d %H:%M') > datetime.now().strftime('%Y/%m/%d %H:%M'):
+            return True
+        return False
+    
     class Meta:
         verbose_name = "Trip"
         verbose_name_plural = "Trips"
