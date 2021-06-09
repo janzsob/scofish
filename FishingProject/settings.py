@@ -18,7 +18,7 @@ import dj_database_url
 from decouple import config
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv() # to load secret key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'catch_details', # app
     'stats', # app
     'storages',
+    'user_profile', # app
+    'django_select2',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +107,21 @@ DATABASES = {
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
+
+# redis in needed for django_select2
+CACHES = {
+    # Redis
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Tell select2 which cache configuration to use:
+SELECT2_CACHE_BACKEND = "default" # Redis
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

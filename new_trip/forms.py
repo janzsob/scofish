@@ -1,9 +1,16 @@
 from .models import Trips, Fisherman, Catch
 from django import forms
+from django_select2 import forms as s2forms
+
+
+class FishermanWidget(s2forms.ModelSelect2MultipleWidget):
+    search_fields = [
+        "user__username__istartswith",
+    ]
 
 
 class TripsForm(forms.ModelForm):
-    fisherman = forms.ModelMultipleChoiceField(queryset=Fisherman.objects.all().exclude(user__username="admin"), widget=forms.SelectMultiple(attrs={'class': 'form-select'}))
+    fisherman = forms.ModelMultipleChoiceField(queryset=Fisherman.objects.all().exclude(user__username="admin"), widget=FishermanWidget(attrs={'class': 'form-select', 'data-language': 'hu'}))
     class Meta:
         model = Trips
         fields = ["lake", "city", "s_date", "e_date", "fisherman"]
@@ -12,6 +19,7 @@ class TripsForm(forms.ModelForm):
             "city": forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'id': 'CityInput',}),
             "s_date": forms.DateTimeInput(format='%Y-%m-%d %H:%M', attrs={'class':'datetimefield form-control', 'id': 'StartingDate',}),
             "e_date": forms.DateTimeInput(format='%Y-%m-%d %H:%M', attrs={'class':'datetimefield form-control', 'id': 'EndingDate',}),
+            #"fisherman": FishermanWidget(attrs = {'class': 'form-select'}),
         }
 
 

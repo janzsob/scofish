@@ -60,7 +60,7 @@
                 {{request.user.username}}
               </a>
               <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
-                <!--<li><a class="dropdown-item" href="#">Profil</a></li>-->
+                <li><a class="dropdown-item" href="{% url 'user_profile:profile' request.user.fisherman.fisherman_id %}">Profil</a></li>
                 <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Kilépés</a></li>
               </ul>
             </li>

@@ -3,7 +3,7 @@
 
 
 {% block content %}
-
+{{ form.media.css }}
 <div class="row mx-3 my-3 justify-content-center">
     <div class="card px-1" style="width: 25rem;">
 
@@ -108,9 +108,12 @@
             <!-- form submit button -->
             <input type="submit" class="btn btn-primary w-100" value="Beküld">
         </form>
+        
         </div> <!-- card body end -->
     </div> <!--  card end -->
 </div> <!-- row end -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{ form.media.js }}
 
 <!-- Script for adding more fishermen 
 <script type="text/javascript">

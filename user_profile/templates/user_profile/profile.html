@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Scofish - Profil{% endblock %}
+{% block content %}
+
+<h3>{{ request.user.username }} - {{ request.user.fisherman.fisherman_id }}</h3>
+
+{% endblock content %}
