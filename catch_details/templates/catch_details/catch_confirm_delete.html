@@ -11,29 +11,23 @@
                 <h2>Biztosan törölni szeretnéd a fogást?</h2>
             </div>
             <div class="col">
-                <a class="btn btn-secondary" href="{% url 'catch_details:catch' object.catch_id %}">Nem</a>
-                <button class="btn btn-outline-danger" type="submit">Igen</button>
+                <a class="btn" style="background-color: #00754B; color:#fff" href="{% url 'catch_details:catch' object.catch_id %}">Nem</a>
+                <button class="btn" style="background-color: #3B3B3B; color:#fff" type="submit">Igen</button>
             </div>
         </form>
     </div>
-    <div class="card px-3 py-2" style="width: 28rem;">
-
+    <div class="card p-3 catch-card" style="width: 28rem;">
         {% if catch.image %}
-            <img src="{{ catch.image.url }}" class="card-img-top" alt="Fish">        
+            <img src="{{ catch.image.url }}" class="card-img-top catch-pic" alt="Fish">        
         {% endif %}
-
-        <div class="card-body px-1 py-2">
-            <h5 class="card-title">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
-            <div>
-            <h6 class="m-0">🧍 {{ catch.fisherman }}</h6>
-            </div>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item py-2 px-0 fst-italic"><small>Horogcsali: </small>{{ catch.hook_bait }}</li>
-        </ul>
-            
-        <small class="text-muted py-2">{{ catch.datetime|date:"Y/m/d, H:i" }}</small> 
-        
+        <div class="card-body p-0 m-0 mt-3">
+            <h5 class="mb-2" style="color: #00754B; font-size: 18px; font-weight:600">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
+            <p class="mb-2" style="color:#00C6CF; font-weight:600; font-size:16px">🧍 {{ catch.fisherman }}</p>
+            <p class="mb-2" style=" font-weight:600; font-size:16px">🧆 {{ catch.hook_bait }}</p>
+            <div class="d-flex mb-2">
+                <div class="me-auto" style="color: #6A9A8B; font-weight:500; font-size: 16px;">📅 {{ catch.datetime|date:"Y.m.d., H:i" }}</div>
+            </div> <!-- flex end -->
+        </div> <!-- Card-body end -->   
     </div> <!-- Card end -->
 </div> <!-- row end-->
 

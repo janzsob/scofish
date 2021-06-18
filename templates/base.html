@@ -33,7 +33,7 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark py-1 fixed-top main-navigation" style="background-color: #2F323A;">
+    <nav class="navbar navbar-expand-lg navbar-dark py-1 fixed-top main-navigation" >
       <div class="container-fluid">
         <a class="navbar-brand order-2 order-lg-1 me-auto me-lg-2 ms-1 ms-lg-0 p-2" href="{% url 'trips_feed:feed' %}">Scofish</a>
         <button class="navbar-toggler" type="button">
@@ -42,7 +42,7 @@
         <!-- overlay -->
         <div class="overlay d-flex d-lg-none"></div>
 
-        <div class="order-lg-2 d-flex flex-column flex-lg-row w-100 bp-3 pb-lg-0 sidebar" style="background-color: #2F323A;">
+        <div class="order-lg-2 d-flex flex-column flex-lg-row w-100 bp-3 pb-lg-0 sidebar">
           <ul class="navbar-nav me-lg-auto mt-2 mt-lg-0 mx-3 mx-lg-0 order-2 order-lg-1">
 
             <li class="nav-item">
@@ -80,7 +80,7 @@
         <!-- It shows the user's ongoing trip -->
         {% for trip in  request.user.fisherman.trips_set.all %}
           {% if trip.is_active %}
-            <a class="btn btn-primary btn-sm navbar-brand order-3 order-lg-2 p-1 m-0  mx-lg-2" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Túra</a>
+            <a class="btn btn-sm navbar-brand order-3 order-lg-2 p-1 m-0  mx-lg-2" style="background-color: #f1f0f0!important; color: #00754B!important" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Túra</a>
           {% endif %}
         {% endfor %}
       </div>

@@ -4,37 +4,22 @@
 
 {% block content %}
 <div class="row justify-content-center mx-3 my-3">
-    <div class="card px-3 py-2" style="width: 28rem;">
-        <!-- Button to get the previous page
-        <a href="{{ request.META.HTTP_REFERER }}" class="text-decoration-none text-reset">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x float-end mb-2 mt-2" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-        </a>
-        -->
+    <div class="card p-3 catch-card" style="width: 28rem;">
         {% if catch.image %}
-            <img src="{{ catch.image.url }}" class="card-img-top" alt="Fish">        
+        <a href="{{ catch.image.url }}" target="_blank"> <!-- It opens the image in a new tab -->
+            <img src="{{ catch.image.url }}" class="card-img-top catch-pic" alt="Fish">
+        </a>
         {% endif %}
-        <div>
-            
-        </div>
-        <div class="card-body px-1 py-2">
-            <h5 class="card-title">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
-            <div>
-            <h6 class="m-0">🧍 {{ catch.fisherman }}</h6>
-            </div>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item py-2 px-0 fst-italic"><small>Horogcsali: </small>{{ catch.hook_bait }}</li>
-        </ul>
-            
-        <small class="text-muted py-2">{{ catch.datetime|date:"Y/m/d, H:i" }}</small> 
-
-
-        {% if catch.fisherman.user == user %}
-        <div class="d-flex flex-row-reverse mx-0">
+        <div class="card-body p-0 m-0 mt-3">
+            <h5 class="mb-2" style="color: #00754B; font-size: 18px; font-weight:600">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
+            <p class="mb-2" style="color:#00C6CF; font-weight:600; font-size:16px">🧍 {{ catch.fisherman }}</p>
+            <p class="mb-2" style=" font-weight:600; font-size:16px">🧆 {{ catch.hook_bait }}</p>
+            <div class="d-flex mb-2">
+                <div class="me-auto" style="color: #6A9A8B; font-weight:500; font-size: 16px;">📅 {{ catch.datetime|date:"Y.m.d., H:i" }}</div>
+                {% if catch.fisherman.user == user %}
+                <div>
                     <!-- Edit catch button -->
-                    <a class="text-decoration-none text-reset order-2 mx-4" href="{% url 'catch_details:catch_update' catch.catch_id %}">
+                    <a class="text-decoration-none text-reset order-2 me-4" href="{% url 'catch_details:catch_update' catch.catch_id %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                         </svg>
@@ -46,13 +31,12 @@
                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
                     </a>
-        </div>
-        {% endif %}
-        
+                </div>
+                {% endif %}
+            </div> <!-- flex end -->
+        </div> <!-- Card-body end -->   
     </div> <!-- Card end -->
 </div> <!-- row end-->
-
-
 
 
 {% endblock content %}

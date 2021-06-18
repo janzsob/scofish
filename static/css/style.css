@@ -1,9 +1,24 @@
+/* Colors 
+#FFFFFF - background, text
+#00754B - navbar, button 
+#3B3B3B - text (black)
+#C8FCEA - secondary color
+#6A9A8B - secondary color
+#00C6CF - a kind of blue
+#f1f0f0 - grey
+*/
 body {
-    background-color: #f1f0f0;
+    background-color: #fff;
     font-family: 'Chakra Petch', sans-serif;
     padding-top: 54px; /*it is needed because I use fixed-top navbar*/
+    color: #3B3B3B;
 }
 
+/* NAVBAR*/
+.navbar  {
+    background-color: #00754B;
+    font-weight: 500;
+}
 
 /* Swipping Navbar */
 .sidebar, .overlay {
@@ -18,6 +33,7 @@ body {
     transition: all ease 0.25s;
     overflow-y: auto;
     z-index: 1032;
+    background-color: #00754B;
 }
 
 .overlay {
@@ -25,7 +41,7 @@ body {
     right: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(47, 50, 58, 0.75);
+    /*background-color: rgba(47, 50, 58, 0.75);*/
     visibility: hidden;
     z-index: 1031;
 }
@@ -52,14 +68,24 @@ body {
     }
 }
 
+/* inline form for HookBaits */
 .add-row {
     text-decoration: none;
 }
 
-.formset_row {
-    
+/* Feed Page, Trip cards */
+.trip-card {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 4px rgba(0,0,0,0.1);
 }
 
-.delete-container {
-    
+/* Catch page */
+.catch-card {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
+}
+
+.catch-pic {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 2px rgba(0,0,0,0.1);
 }
