@@ -3,7 +3,7 @@
 
 
 {% block content %}
-<div class="row justify-content-center mx-3 my-3">
+<div class="row justify-content-center mx-4 my-3">
     <div class="card p-3 catch-card" style="width: 28rem;">
         {% if catch.image %}
         <a href="{{ catch.image.url }}" target="_blank"> <!-- It opens the image in a new tab -->
@@ -13,9 +13,9 @@
         <div class="card-body p-0 m-0 mt-3">
             <h5 class="mb-2" style="color: #00754B; font-size: 18px; font-weight:600">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
             <p class="mb-2" style="color:#00C6CF; font-weight:600; font-size:16px">🧍 {{ catch.fisherman }}</p>
-            <p class="mb-2" style=" font-weight:600; font-size:16px">🧆 {{ catch.hook_bait }}</p>
+            <p class="mb-2" style=" font-weight:500; font-size:16px">🧆 {{ catch.hook_bait }}</p>
             <div class="d-flex mb-2">
-                <div class="me-auto" style="color: #6A9A8B; font-weight:500; font-size: 16px;">📅 {{ catch.datetime|date:"Y.m.d., H:i" }}</div>
+                <div class="me-auto" style="color:#6A9A8B; font-weight:500; font-size: 14px;">📅 {{ catch.datetime|date:"Y.m.d., H:i" }}</div>
                 {% if catch.fisherman.user == user %}
                 <div>
                     <!-- Edit catch button -->

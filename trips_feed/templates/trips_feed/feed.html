@@ -14,9 +14,11 @@
         {% endfor %}
     {% endif %}
 </div>
-
+<!--
+<div class="row mt-2 ms-2 ps-3" style="font-size:22px; font-weight:600;">Horgásztúrák</div>
+-->
 {% for trip in trips  %}
-    <div class="row justify-content-center mx-2 my-3">
+    <div class="row justify-content-center mx-3 my-3">
         <div class="card px-2 py-1 my-1 trip-card" style="width: 23rem;">
             <a href="{% url 'new_trip:trip_details' trip.trip_id %}" class="text-decoration-none text-reset">
                 <div class="card-body p-0">
@@ -26,10 +28,10 @@
                     
                     <div class="d-flex justify-content-start justify-content-md-center" style="font-size: 14px;">
                         <div class="p-1">
-                            🎣 Összfogás: <span class="fw-bold">{{ trip.total_catch_weight }} kg</span>
+                            🎣 Összfogás: <span class="" style="font-size: 15px; font-weight:600">{{ trip.total_catch_weight }} kg</span>
                         </div>
                         <div class="p-1">
-                            🧍 Horgász: <span class="fw-bold">{{ trip.fisherman.all.count }} db</span>
+                            🧍 Horgász: <span class="" style="font-size: 15px; font-weight:600">{{ trip.fisherman.all.count }} db</span>
                         </div>
                     </div>
                     
