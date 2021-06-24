@@ -1,9 +1,8 @@
 /* Colors 
 #FFFFFF - background, text
-#00754B - navbar, button 
+#00754B - navbar, button (green) 
 #3B3B3B - text (black)
-#C8FCEA - secondary color
-#6A9A8B - secondary color
+#6A9A8B - secondary color (kind of green)
 #00C6CF - a kind of blue
 #f1f0f0 - grey
 */
@@ -91,7 +90,6 @@ body {
 }
 
 /* Trip details page */
-
 .trip-details-catch {
     border-radius: 20px;
     box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
@@ -103,4 +101,25 @@ body {
     border-bottom-right-radius: 15px;*/
     border-radius: 15px;
     box-shadow: 0 0 7px 1px rgba(0,0,0,0.1);
+}
+
+/* Profile page */
+.sum-card {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
+}
+
+.max-catch-card {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);    
+}
+
+.max-catch-pic {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
+}
+
+.tips-card {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
 }

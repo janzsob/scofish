@@ -1,16 +1,60 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from new_trip.models import Fisherman
+from new_trip.models import Fisherman, Trips, Catch
 from .models import HookBait
 from .forms import HookBaitForm, HookBaitFormset
 from django.http import HttpResponse
+from django.db.models import Sum
+from django.views.generic.list import ListView
 
 
 class ProfileView(DetailView):
     model = Fisherman
     template_name = "user_profile/profile.html"
     context_object_name = "profile"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # all related trips to the user
+        context["all_trips"] = Trips.objects.filter(fisherman__user=self.request.user).count()
+
+        # weight of all cathces
+        """
+        aggregation_weight = Catch.objects.filter(fisherman__user=self.request.user).aggregate(Sum('weight'))
+        context["total_weight"] = aggregation_weight["weight__sum"]
+        """
+        # number of all catches
+        context["all_catches"] = Catch.objects.filter(fisherman__user=self.request.user).count()
+
+        # users's max catch
+        context["max_catch"] = Catch.objects.filter(fisherman__user=self.request.user).order_by('-weight')[0:1]
+        
+        return context 
+
+
+class UserTripsView(ListView):
+    model = Trips
+    template_name = "user_profile/trips.html"
+    context_object_name = "trips"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_trips"] = Trips.objects.filter(fisherman__user=self.request.user).order_by('-trip_id')
+        return context
+
+
+class UserCatchesView(ListView):
+    model = Catch
+    template_name = "user_profile/catches.html"
+    context_object_name = "catches"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_catches"] = Catch.objects.filter(fisherman__user=self.request.user).order_by('-catch_id')
+        return context
+
 
 """
 class HookBaitCreateView(CreateView):
