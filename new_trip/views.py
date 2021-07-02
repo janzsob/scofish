@@ -3,7 +3,7 @@ from django.contrib import messages
 from .forms import TripsForm, CatchForm
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-from .models import Trips, Fisherman, Catch
+from .models import Trips, Fisherman, Catch, HookBait
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -149,6 +149,12 @@ class NewCatchView(NewCatchLoginRequiredMixin, SuccessMessageMixin, CreateView):
         current_trip = Trips.objects.get(pk=self.kwargs['pk'])
         form.instance.trip = current_trip
 
+        # Adding extra validation error: 
+        if form.instance.hookbait_name != None and form.instance.hookbait != None:
+            form.add_error("hookbait_name", "Csak egy csalit adhat meg!")
+            form.add_error("hookbait", "Csak egy csalit adhat meg!")
+            return super().form_invalid(form)
+
         # to add weight of the new catch to the total weight in Trips
         current_trip.total_catch_weight += form.instance.weight
         current_trip.save()
@@ -158,10 +164,21 @@ class NewCatchView(NewCatchLoginRequiredMixin, SuccessMessageMixin, CreateView):
         catcher.catch_sum_weight += form.instance.weight
         catcher.save()
 
+        # It creates a hookbait
+        if not form.instance.hookbait_name == None:
+            HookBait.objects.create(name=form.instance.hookbait_name, fisherman=form.instance.fisherman)
+
         return super().form_valid(form)
     
     def get_success_url(self):
         return reverse('new_trip:trip_details', args=(self.kwargs['pk'],))
+
+
+# Ajax for dependent select on the new catch page
+def load_hookbaits(request):
+    fisherman_id = request.GET.get("fisherman_id") # it is coming from the jquery script in the new catch page
+    hookbaits = HookBait.objects.filter(fisherman_id=fisherman_id).order_by('name')
+    return render(request, "new_trip/hookbaits_dependent_select.html", {"hookbaits": hookbaits})
 
 
 class TripUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):

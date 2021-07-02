@@ -42,6 +42,20 @@ class Trips(models.Model):
 
 
 
+class HookBait(models.Model):
+    hookbait_id = models.AutoField(primary_key=True)
+    name = models.CharField('HookBait', max_length=120, blank=True, null=True)
+    fisherman = models.ForeignKey(Fisherman, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Hookbait"
+        verbose_name_plural = "Hookbaits"
+
+    def __str__(self):
+        return self.name
+
+
+# Choices for catch
 fish_choices = [
     ("Ponty", "Ponty"),
     ("Amur", "Amur"),
@@ -51,21 +65,23 @@ fish_choices = [
     ("Tok", "Tok"),
 ]
 
-
 class Catch(models.Model):
     fish_type = models.CharField("Fish Type", max_length=50, choices=fish_choices, default="Carp")
     catch_id = models.AutoField(primary_key=True)
     weight = models.DecimalField("Weight", max_digits=5, decimal_places=2)
     length = models.DecimalField("Length", max_digits=5, decimal_places=2, blank=True, null=True)
-    hook_bait = models.CharField("Hook Bait", max_length=100)
     datetime = models.DateTimeField("Catch Time", auto_now=False, auto_now_add=False)
     image = models.ImageField(null=True, blank=True, default="default_img.png", upload_to="catch_images/")
     fisherman = models.ForeignKey(Fisherman, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
+    hookbait_name = models.CharField('Csali megnevezése', max_length=120, blank=True, null=True)
+    hookbait = models.ForeignKey(HookBait, on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name = "Catch"
         verbose_name_plural = "Catches"
 
     def __str__(self):
-        return f"{self.fish_type} - {self.catch_id} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
+        return f"{self.fish_type}, {self.weight} kg - {self.trip.lake} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
+
+

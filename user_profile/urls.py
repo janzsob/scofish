@@ -7,5 +7,5 @@ urlpatterns = [
     path("trips/<int:pk>/", views.UserTripsView.as_view(), name="user_trips"),
     path("catches/<int:pk>/", views.UserCatchesView.as_view(), name="user_catches"),
     #path("hookbait/create/", views.HookBaitCreateView.as_view(), name="hookbait_create"),
-    #path("profile/<int:pk>/hookbait/update/", views.HookBaitUpdateView.as_view(), name="hookbait_update"),
+    path("profile/<int:pk>/hookbaits/", views.HookBaitUpdateView.as_view(), name="hookbaits"),
 ]

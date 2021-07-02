@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from new_trip.models import Fisherman, Trips, Catch
-from .models import HookBait
+from new_trip.models import Fisherman, Trips, Catch, HookBait
+#from .models import HookBait
 from .forms import HookBaitForm, HookBaitFormset
 from django.http import HttpResponse
 from django.db.models import Sum
@@ -31,6 +31,9 @@ class ProfileView(DetailView):
         # users's max catch
         context["max_catch"] = Catch.objects.filter(fisherman__user=self.request.user).order_by('-weight')[0:1]
         
+        # List of own hookbaits
+        context["own_hookbaits"] = HookBait.objects.filter(fisherman__user=self.request.user)
+
         return context 
 
 
@@ -59,7 +62,7 @@ class UserCatchesView(ListView):
 """
 class HookBaitCreateView(CreateView):
     model = HookBait
-    template_name = "user_profile/hookbait_create.html"
+    template_name = "user_profile/hookbaits.html"
     form_class = HookBaitForm
 
     def get_context_data(self, **kwargs):
@@ -81,11 +84,11 @@ class HookBaitCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('trips_feed:feed')
-
+"""
 
 class HookBaitUpdateView(UpdateView):
     model = HookBait
-    template_name = "user_profile/hookbait_create.html"
+    template_name = "user_profile/hookbaits.html"
     form_class = HookBaitForm
 
     def get_context_data(self, **kwargs):
@@ -111,5 +114,4 @@ class HookBaitUpdateView(UpdateView):
         return HttpResponse("Invalid")
 
     def get_success_url(self):
-        return reverse('trips_feed:feed')
-"""
+        return reverse('user_profile:profile', args=(self.kwargs['pk'],))

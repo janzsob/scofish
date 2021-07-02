@@ -56,7 +56,7 @@
                 var delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.'),
                     addCssSelector = $.trim(options.addCssClass).replace(/\s+/g, '.');
 
-                var delButtonHTML = '<a class="' + options.deleteCssClass + '" href="javascript:void(0)"> <i class="bi bi-trash fs-3 mx-2"></i> </a>'; // deleteText was changed for remove icon
+                var delButtonHTML = '<a class="' + options.deleteCssClass + '" href="javascript:void(0)"> <i class="bi bi-trash fs-3 mx-2" style="color:#00754B"></i> </a>'; // deleteText was changed for remove icon
                 if (options.deleteContainerClass) {
                     // If we have a specific container for the remove button,
                     // place it as the last child of that container:
@@ -182,7 +182,7 @@
             // FIXME: Perhaps using $.data would be a better idea?
             options.formTemplate = template;
 
-            var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0)"><i class="bi bi-plus-circle fs-3 mx-2"></i></a>'; // plus icon was added
+            var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0)"><i class="bi bi-plus-circle fs-3 mx-2" style="color:#00754B"></i></a>'; // plus icon was added
             if (options.addContainerClass) {
                 // If we have a specific container for the "add" button,
                 // place it as the last child of that container:

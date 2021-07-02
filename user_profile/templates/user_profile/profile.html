@@ -34,23 +34,58 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mx-2">
-    {% for catch in max_catch %}
+
+{% if max_catch.count == 0 %}
+<div class="d-flex justify-content-center mx-2">    
     <div class="card max-catch-card m-2 p-0" style="width: 26rem;">
-        <a href="{% url 'catch_details:catch' catch.catch_id %}" class="text-decoration-none text-reset">
-            <div class="card-body p-1 py-3" style="">
+            <div class="card-body p-1 py-3">
                 <div class="row text-center m-0">
-                    <div class="col-6">
-                        <img src="{{ catch.image.url }}" class="max-catch-pic" style="width: 7.5rem;" alt="Fish">
-                    </div>
-                    <div class="col-6 d-flex justify-content-center p-0">
-                        <p class="m-0 align-self-center" style="font-size: 24px; font-weight:600; ">{{ catch.weight|floatformat:1 }} kg</p>
-                    </div>
+                    <p class="m-0" style="font-size: 20px; font-weight:600;">Nincs még fogásod.</p>
                 </div>
             </div>
-        </a>
+
+    </div>    
+</div>    
+{% else %}
+    {% for catch in max_catch %}
+    <div class="d-flex justify-content-center mx-2">    
+        <div class="card max-catch-card m-2 p-0" style="width: 26rem;">
+            <a href="{% url 'catch_details:catch' catch.catch_id %}" class="text-decoration-none text-reset">
+                <div class="card-body p-1 py-3">
+                    <div class="row text-center m-0">
+                        <div class="col-6">
+                            <img src="{{ catch.image.url }}" class="max-catch-pic" style="width: 7.5rem;" alt="Fish">
+                        </div>
+                        <div class="col-6 d-flex justify-content-center p-0">
+                            <p class="m-0 align-self-center" style="font-size: 24px; font-weight:600; ">{{ catch.weight|floatformat:1 }} kg</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>    
     </div>
     {% endfor %}
+{% endif %}
+    
+
+<div class="row mx-3">
+    <div class="p-2" style="font-size: 20px; font-weight:600; color:#00754B">
+        Saját csalik
+    </div>
 </div>
+
+<div class="d-flex justify-content-center mx-2" >
+        
+    <ul class="list-group text-center custom-borders m-2 p-0" style="width: 26rem;">
+        {% if own_hookbaits.count == 0 %}
+        <a href="{% url 'user_profile:hookbaits' request.user.fisherman.fisherman_id %}" class="list-group-item list-group-item-action p-3" style="font-size: 20px; font-weight:600;">Nincs még saját csalid</a>        
+        {% else %}
+            {% for hookbait in own_hookbaits %}    
+            <a href="{% url 'user_profile:hookbaits' request.user.fisherman.fisherman_id %}" class="list-group-item list-group-item-action p-2" style="font-size: 18px; font-weight:600;">{{ hookbait.name }}</a>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</div>
+
 
 {% endblock content %}

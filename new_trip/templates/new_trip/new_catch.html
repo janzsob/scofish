@@ -10,9 +10,20 @@
         <h3 class="mt-3 mb-1 text-center">Fogás Rögzítése</h3>
         
         <div class="card-body">
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" id="catchForm" data-hookbaits-url="{% url 'new_trip:ajax_load_hookbaits' %}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field_errors }}
+            <div class="row justify-content-center mb-2">
+                <div class="col-sm-12">
+                    <label for="" class="form-label mb-1">Horgász:</label>
+                    {% for error in form.fisherman.errors  %}
+                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                        HIBA: {{ error }}                            
+                    </p>
+                    {% endfor %}
+                    {{ form.fisherman }}
+                </div>
+            </div>
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label for="LakeInput" class="form-label mb-1">Halfaj:</label>
@@ -35,6 +46,7 @@
                     {{ form.weight }}
                 </div>
             </div>
+            <!--
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label for="CityInput" class="form-label mb-1">Hossz(cm):</label>
@@ -47,28 +59,41 @@
                     <div class="form-text my-1">Nem kötelező</div>
                 </div>
             </div>
-            <div class="row justify-content-center mb-2">
+            -->
+
+            <div class="row justify-content-center mb-2" >
+                <label for="" class="form-label mb-1">Horogcsali:</label>
                 <div class="col-sm-12">
-                    <label for="" class="form-label mb-1">Horogcsali:</label>
-                    {% for error in form.hook_bait.errors  %}
+                    <div class="d-flex justify-content-start p-0 mb-2" style="color:#00754B">
+                        <div class="">
+                            <label class="form-check-label fst-italic pe-2" style="font-size: 15px;">
+                                Saját csalikat mutassa!
+                            </label>
+                                
+                        </div>
+                        <div class="">
+                            <input class="form-check-input" type="checkbox" value="" id="choice">
+                        </div>
+                    </div>  
+                </div>
+                <div class="col-sm-12" id="newBaits">
+                    {% for error in form.hookbait_name.errors  %}
                     <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                         HIBA: {{ error }}                            
                     </p>
                     {% endfor %}
-                    {{ form.hook_bait }}
+                    {{ form.hookbait_name }}
                 </div>
-            </div>
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label for="" class="form-label mb-1">Horgász:</label>
-                    {% for error in form.fisherman.errors  %}
+                <div class="col-sm-12" id="savedBaits">
+                    {% for error in form.hookbait.errors  %}
                     <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                         HIBA: {{ error }}                            
                     </p>
                     {% endfor %}
-                    {{ form.fisherman }}
+                    {{ form.hookbait }}
                 </div>
             </div>
+
             <div class="row justify-content-center mb-2">
                 <div class="col-sm-12">
                     <label for="" class="form-label mb-1">Kép:</label>
@@ -107,4 +132,32 @@
     </div> <!--  card end -->
 </div> <!-- row end -->
 
+<script>
+    // AJAX
+    $("#id_fisherman").change(function() {
+        const url = $("#catchForm").attr("data-hookbaits-url"); // they can be found in the form head, Get the url of the load_hookbaits view.
+        const fishermanId = $(this).val(); // getting the selected fisherman id from the input.
+
+        $.ajax({ // pull out ajax request
+            url: url,  // setting the url of the request: ajax/load-hookbaits/
+            data: {
+                'fisherman_id': fishermanId // add the fisherman id to the GET parameters
+            },
+            success: function(data) { // data is the return of the load_hookbaits view function
+                $("#id_hookbait").html(data); // replace the content of the input with tha data that came from the server
+            }
+        });
+    });
+</script>
+<script>
+// to hide or show new and saved baits
+$(document).ready(function() {
+    $('#savedBaits').hide();
+    $('#choice').on('click', function() {
+        $('#newBaits').toggle(); // toggle do the opposite what the current state of the element is
+        //$('#newBaits').val(null);
+        $('#savedBaits').toggle();
+    })
+})
+</script>
 {% endblock content %}
