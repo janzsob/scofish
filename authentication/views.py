@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreateUserForm
 from django.contrib import messages
+from django.views.generic.edit import FormView
+from django.core.mail import send_mail
+
 
 """
 def hello(request):
@@ -43,3 +46,31 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("auth:login")
+
+"""
+class ContactView(FormView):
+    template_name = 'authentication/contact.html'
+    form_class = CreateUserForm
+    #success_url = '/thanks/'
+"""
+
+def contact_view(request):
+    if request.method == "POST":
+        message_name = request.POST.get("name")
+        message_email = request.POST.get("email")
+        message_subject = request.POST.get("subject")
+        message_text = request.POST.get("message")
+
+        # send an email
+        send_mail(
+            message_subject, # subject
+            message_text, # message
+            message_email, # from
+            ['bence.janzso@gmail.com'], # to
+        )
+        messages.success(request, f"Köszönjük az üzeneted! Hamaorsan felvesszük veled a kapcsolatot.")
+
+        return render(request, "authentication/contact.html", )
+
+    context = {}
+    return render(request, "authentication/contact.html", context)
