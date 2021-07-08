@@ -17,7 +17,7 @@ def register_view(request):
     if form.is_valid():
         form.save()
         user = form.cleaned_data.get("username")
-        messages.success(request, f"Sikeres regisztráció. Jelentkezzen be!")
+        messages.success(request, f"Sikeres regisztráció. Jelentkezz be!")
         return redirect("auth:login")
 
     context = {"form": form}

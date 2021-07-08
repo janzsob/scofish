@@ -63,7 +63,7 @@ class CreateTripView(CreateTripLoginRequiredMixin, SuccessMessageMixin, CreateVi
     # user is not able to a new trip if he/she has already an existing one.
     def get(self, request, *args, **kwargs):
         if self.has_active_trip():
-            messages.error(request, 'Van már aktív horgásztúrája.')
+            messages.error(request, 'Van már egy aktív horgásztúrád.')
             return redirect("trips_feed:feed")
         else:
             return super().get(request, *args, **kwargs)

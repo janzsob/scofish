@@ -27,6 +27,7 @@ urlpatterns = [
     path("", include("stats.urls")),
     path("", include("user_profile.urls")),
     path("select2/", include("django_select2.urls")), # django-select2 
+    path('', include('django.contrib.auth.urls')), # It's needed because of password reset
 ]#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # for development

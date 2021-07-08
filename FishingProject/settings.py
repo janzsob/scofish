@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 """ CHANGE IT IN PRODUCTION! """
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['scofish.herokuapp.com', '127.0.0.1', 'www.scofish.net', 'scofish.net']
 
@@ -180,12 +180,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # for heroku deployment
 """ CHANGE IT IN PRODUCTION! """
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
 
 #S3 BUCKETS CONFIG (deployment)
 """ CHANGE IT IN PRODUCTION! """
-
+"""
 AWS_ACCESS_KEY_ID = 'AKIAU3UJGCF7ASABZREK'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'scofish.net-bucket'
@@ -195,7 +195,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_S3_REGION_NAME = 'eu-central-1' 
 AWS_S3_SIGNATURE_VERSION = 's3v4'
-
+"""
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
