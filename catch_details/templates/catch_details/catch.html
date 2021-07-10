@@ -13,14 +13,16 @@
         <div class="card-body p-0 m-0 mt-3">
             <h5 class="mb-2" style="color:#00754B;font-size: 18px; font-weight:600">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>
             <p class="mb-2" style="color:#00C6CF; font-weight:600; font-size:16px">🧍 {{ catch.fisherman }}</p>
-            <p class="mb-2" style=" font-weight:600; font-size:16px">🧆 
+            <p class="mb-2" style=" font-weight:600; font-size:16px">🧆
+                {{ catch.hookbait_name }}
+                <!--
                 {% if catch.hookbait == None and catch.hookbait_name == None%}
                 Nincs csali megadva
                 {% elif catch.hookbait_name == None %}
                 {{ catch.hookbait }}
                 {% elif catch.hookbait == None %}
                 {{ catch.hookbait_name }}
-                {% endif %}
+                {% endif %} -->
                 </p>
             <p class="mb-2" style=" font-weight:500; font-size:16px">🌊 {{ catch.trip.lake }}</p>
             <div class="d-flex mb-2">

@@ -117,5 +117,69 @@
     </div> 
 </div>
 
+<!-- Chart -->
+<div class="row justify-content-center text-center mb-3 mx-2">
+    <h2 class="fw-bold">Csali/Fogás</h2>
+    <canvas id="hookbaitsChart" class="p-0"></canvas>
+</div>
 
+
+<script>
+    const myChart = document.getElementById('hookbaitsChart');
+
+    // Global options
+    Chart.defaults.font.size = 14;
+    Chart.defaults.color = '#3B3B3B';
+    Chart.defaults.family = 'Chakra Petch';
+
+    
+    const pieChart = new Chart(myChart, {
+        type: 'pie',
+        data: {
+            labels: [
+            {% for catch in catches %}
+                '{{ catch.hookbait_name }}', 
+            {% endfor %}
+            ],
+            datasets: [{
+                label: 'Population',
+                data: [
+                {% for catch in catches %}
+                    '{{ catch.num_hookbait }}', 
+                {% endfor %}
+                ],
+                backgroundColor: [
+                    '#00754B',
+                    '#3B3B3B',
+                    '#E3E0F3',
+                    "#99E7E9",
+                    '#008288',
+                    '#ACA7CB',
+                    '#FFDFCA',
+                    '#FFE694',
+                    '#D19F9C',
+                    '#FF00E9',
+                    '#8083FF',
+                    '#6A6A6A',
+                ]
+            }],
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: false,
+                    text: '',
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    //align: 'start'
+                },
+                tooltip: {
+                    enabled: true,
+                }
+            }
+        },
+    })
+</script>
 {% endblock content %}

@@ -168,6 +168,9 @@ class NewCatchView(NewCatchLoginRequiredMixin, SuccessMessageMixin, CreateView):
         if not form.instance.hookbait_name == None:
             HookBait.objects.create(name=form.instance.hookbait_name, fisherman=form.instance.fisherman)
 
+        if not form.instance.hookbait == None:
+            form.instance.hookbait_name = form.instance.hookbait.name
+            
         return super().form_valid(form)
     
     def get_success_url(self):

@@ -24,6 +24,9 @@ class StatView(DetailView):
         context["catches_num"] = Catch.objects.filter(trip=self.kwargs.get('pk')).count() # total number of cacthes
         context["catch_max"] = Catch.objects.filter(trip=self.kwargs.get('pk')).order_by('-weight')[0:1] # max catch in the trip
 
+        # Catches for displaying hookbaits in chart
+        context["catches"] = Catch.objects.filter(trip=self.kwargs.get('pk')).values('hookbait_name').annotate(num_hookbait=Count('hookbait_name'))
+
         # aggregating fishermen's catches in the trip.
         # Annoteting is being used for summorizing and counting catches. 
         context["fishermen_catches"] = Fisherman.objects.filter(
