@@ -72,7 +72,7 @@ class Catch(models.Model):
     weight = models.DecimalField("Weight", max_digits=5, decimal_places=2)
     length = models.DecimalField("Length", max_digits=5, decimal_places=2, blank=True, null=True)
     datetime = models.DateTimeField("Catch Time", auto_now=False, auto_now_add=False)
-    image = ResizedImageField(size=[1920, 1080], quality=95, null=True, blank=True, default="default_img.png", upload_to="catch_images/")
+    image = ResizedImageField(size=[1080, 1350], quality=95, null=True, blank=True, default="default_img.png", upload_to="catch_images/")
     fisherman = models.ForeignKey(Fisherman, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
     hookbait_name = models.CharField('Csali megnevezése', max_length=120, blank=True, null=True)
