@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 #from django_resized import ResizedImageField
-from PIL import Image
+#from PIL import Image
+from .utils import image_resize
 
 class Fisherman(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -78,15 +79,6 @@ class Catch(models.Model):
     hookbait_name = models.CharField('Csali megnevezése', max_length=120, blank=True, null=True)
     hookbait = models.ForeignKey(HookBait, on_delete=models.SET_NULL, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        img = Image.open(self.image.path)
-
-        if img.height > 500 or img.width > 500:
-            new_img = (1080, 1350)
-            img.thumbnail(new_img)
-            img.save(self.image.path)
-
     class Meta:
         verbose_name = "Catch"
         verbose_name_plural = "Catches"
@@ -94,4 +86,7 @@ class Catch(models.Model):
     def __str__(self):
         return f"{self.fish_type}, {self.weight} kg - {self.trip.lake} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
 
-
+    # Resizing image
+    def save(self, *args, **kwargs):
+        image_resize(self.image, 1080, 1350)
+        super().save(*args, **kwargs)
