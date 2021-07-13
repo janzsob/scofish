@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-#from django_resized import ResizedImageField
+from django_resized import ResizedImageField
 #from PIL import Image
-from .utils import image_resize
+#from .utils import image_resize
 
 class Fisherman(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -73,7 +73,7 @@ class Catch(models.Model):
     weight = models.DecimalField("Weight", max_digits=5, decimal_places=2)
     length = models.DecimalField("Length", max_digits=5, decimal_places=2, blank=True, null=True)
     datetime = models.DateTimeField("Catch Time", auto_now=False, auto_now_add=False)
-    image = models.ImageField(null=True, blank=True, default="default_img.png", upload_to="catch_images/")
+    image = ResizedImageField(size=[1080, 1080], quality=95, null=True, blank=True, default="default_img.png", upload_to="catch_images/")
     fisherman = models.ForeignKey(Fisherman, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
     hookbait_name = models.CharField('Csali megnevezése', max_length=120, blank=True, null=True)
@@ -85,8 +85,3 @@ class Catch(models.Model):
 
     def __str__(self):
         return f"{self.fish_type}, {self.weight} kg - {self.trip.lake} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
-
-    # Resizing image
-    def save(self, *args, **kwargs):
-        image_resize(self.image, 1080, 1350)
-        super().save(*args, **kwargs)
