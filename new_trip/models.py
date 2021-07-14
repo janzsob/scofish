@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from datetime import datetime
 #from django_resized import ResizedImageField
 #from .utils import image_resize
-from PIL import Image
-from django.core.files.storage import default_storage
+from PIL import Image, ExifTags
 from io import BytesIO
+from django.core.files import File
+#from django.core.files.storage import default_storage
+
 
 
 class Fisherman(models.Model):
@@ -87,19 +89,31 @@ class Catch(models.Model):
         verbose_name_plural = "Catches"
 
     def save(self, *args, **kwargs):
-        #run save of parent class above to save original image to disk
-        super().save(*args, **kwargs)
+        if self.image:
+            img = Image.open(BytesIO(self.image.read()))
+            
+            if hasattr(img, '_getexif'):
+                exif = img._getexif()
+                if exif:
+                    for tag, label in ExifTags.TAGS.items():
+                        if label == 'Orientation':
+                            orientation = tag
+                            break
+                    if orientation in exif:
+                        if exif[orientation] == 3:
+                            img = img.rotate(180, expand=True)
+                        elif exif[orientation] == 6:
+                            img = img.rotate(270, expand=True)
+                        elif exif[orientation] == 8:
+                            img = img.rotate(90, expand=True)
 
-        memfile = BytesIO()
+            img.thumbnail((1080,1350), Image.ANTIALIAS)
+            output = BytesIO()
+            img.save(output, format='JPEG', quality=95)
+            output.seek(0)
+            self.image = File(output, self.image.name) 
 
-        img = Image.open(self.image)
-        if img.height > 1000 or img.width > 1000:
-            output_size = (1000, 1000)
-            img.thumbnail(output_size, Image.ANTIALIAS)
-            img.save(memfile, 'JPEG', quality=95)
-            default_storage.save(self.image.name, memfile)
-            memfile.close()
-            img.close()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.fish_type}, {self.weight} kg - {self.trip.lake} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
