@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-from django_resized import ResizedImageField
-#from PIL import Image
+#from django_resized import ResizedImageField
+from PIL import Image
+import io
+from django.core.files.uploadhandler import InMemoryUploadedFile
 #from .utils import image_resize
 
 class Fisherman(models.Model):
@@ -73,7 +75,7 @@ class Catch(models.Model):
     weight = models.DecimalField("Weight", max_digits=5, decimal_places=2)
     length = models.DecimalField("Length", max_digits=5, decimal_places=2, blank=True, null=True)
     datetime = models.DateTimeField("Catch Time", auto_now=False, auto_now_add=False)
-    image = ResizedImageField(size=[1080, 1350], quality=95, keep_meta=False, null=True, blank=True, default="default_img.png", upload_to="catch_images/")
+    image = models.ImageField(null=True, blank=True, default="default_img.png", upload_to="catch_images/")
     fisherman = models.ForeignKey(Fisherman, on_delete=models.CASCADE)
     trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
     hookbait_name = models.CharField('Csali megnevezése', max_length=120, blank=True, null=True)
@@ -82,6 +84,18 @@ class Catch(models.Model):
     class Meta:
         verbose_name = "Catch"
         verbose_name_plural = "Catches"
+
+    def save(self):
+        if self.image:
+            img = Image.open(io.BytesIO(self.image.read()))
+            img.thumbnail((1080, 1080), Image.ANTIALIAS)
+            output = io.BytesIO()
+            img.save(output, format='JPEG')
+            output.seek(0)
+            self.image= InMemoryUploadedFile(output, "ImageField", "%s.jpg" 
+                    %self.image.name.split('.')[0], 'image/jpeg', "Content-Type: charset=utf-8", None)
+            
+            super().save()
 
     def __str__(self):
         return f"{self.fish_type}, {self.weight} kg - {self.trip.lake} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
