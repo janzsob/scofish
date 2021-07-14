@@ -2,10 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 #from django_resized import ResizedImageField
-from PIL import Image
-import io
-from django.core.files.uploadhandler import InMemoryUploadedFile
 #from .utils import image_resize
+from PIL import Image
+from django.core.files.storage import default_storage
+from io import BytesIO
+
 
 class Fisherman(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -85,17 +86,20 @@ class Catch(models.Model):
         verbose_name = "Catch"
         verbose_name_plural = "Catches"
 
-    def save(self):
-        if self.image:
-            img = Image.open(io.BytesIO(self.image.read()))
-            img.thumbnail((1080, 1080), Image.ANTIALIAS)
-            output = io.BytesIO()
-            img.save(output, format='JPEG')
-            output.seek(0)
-            self.image= InMemoryUploadedFile(output, "ImageField", "%s.jpg" 
-                    %self.image.name.split('.')[0], 'image/jpeg', "Content-Type: charset=utf-8", None)
-            
-            super().save()
+    def save(self, *args, **kwargs):
+        #run save of parent class above to save original image to disk
+        super().save(*args, **kwargs)
+
+        memfile = BytesIO()
+
+        img = Image.open(self.image)
+        if img.height > 1000 or img.width > 1000:
+            output_size = (1000, 1000)
+            img.thumbnail(output_size, Image.ANTIALIAS)
+            img.save(memfile, 'JPEG', quality=95)
+            default_storage.save(self.image.name, memfile)
+            memfile.close()
+            img.close()
 
     def __str__(self):
         return f"{self.fish_type}, {self.weight} kg - {self.trip.lake} - {self.datetime.strftime('%Y/%m/%d, %H:%M')}"
