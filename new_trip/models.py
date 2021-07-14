@@ -1,12 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-#from django_resized import ResizedImageField
-#from .utils import image_resize
 from PIL import Image, ExifTags
 from io import BytesIO
 from django.core.files import File
-#from django.core.files.storage import default_storage
 
 
 
@@ -87,7 +84,8 @@ class Catch(models.Model):
     class Meta:
         verbose_name = "Catch"
         verbose_name_plural = "Catches"
-
+    
+    # Reducing the size of images and rotate them, if it's necessary
     def save(self, *args, **kwargs):
         if self.image:
             img = Image.open(BytesIO(self.image.read()))
@@ -107,7 +105,7 @@ class Catch(models.Model):
                         elif exif[orientation] == 8:
                             img = img.rotate(90, expand=True)
 
-            img.thumbnail((1080,1350), Image.ANTIALIAS)
+            img.thumbnail((1080,1080), Image.ANTIALIAS)
             output = BytesIO()
             img.save(output, format='JPEG', quality=95)
             output.seek(0)
