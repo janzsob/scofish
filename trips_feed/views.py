@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from new_trip.models import Trips, Fisherman, Catch
 from django.db.models import Count, Sum
 import datetime
+from django.views.generic.base import TemplateView
 
 
 class FeedView(ListView):
@@ -24,3 +25,7 @@ class FeedView(ListView):
         context["sum_list"] = sum_list
 
         return context
+
+
+class HomeView(TemplateView):
+    template_name = "trips_feed/home.html"

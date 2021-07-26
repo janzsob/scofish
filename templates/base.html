@@ -25,9 +25,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@1,600&family=Chakra+Petch&display=swap" rel="stylesheet">
 
     <!-- CSS link -->
     {% load static %}
@@ -38,7 +38,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark py-1 fixed-top main-navigation" >
       <div class="container-fluid">
-        <a class="navbar-brand order-2 order-lg-1 me-auto me-lg-2 ms-1 ms-lg-0 p-2" href="{% url 'trips_feed:feed' %}">Scofish</a>
+        <a class="navbar-brand order-2 order-lg-1 me-auto me-lg-2 ms-1 ms-lg-0 p-1" href="{% url 'trips_feed:home' %}" id="BrandLogo">Scofish</a>
         <button class="navbar-toggler" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -49,7 +49,10 @@
           <ul class="navbar-nav me-lg-auto mt-2 mt-lg-0 mx-3 mx-lg-0 order-2 order-lg-1">
 
             <li class="nav-item">
-              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'trips_feed:feed' %}">Főoldal</a>
+              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'trips_feed:home' %}">Főoldal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'trips_feed:feed' %}">Horgászatok</a>
             </li>
             <li class="nav-item">
               <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'new_trip:create_trip' %}">Új Túra</a>
@@ -86,13 +89,13 @@
         <!-- It shows the user's ongoing trip -->
         {% for trip in  request.user.fisherman.trips_set.all %}
           {% if trip.is_active %}
-            <a class="btn btn-sm navbar-brand order-3 order-lg-2 p-1 m-0  mx-lg-2" style="background-color: #f1f0f0!important; color: #00754B!important" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Túra</a>
+            <a class="btn navbar-brand order-3 order-lg-3 p-1 m-0  mx-lg-2" style="background-color: #f1f0f0!important; color: #00754B!important; font-size: 17px" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Túra</a>
           {% endif %}
         {% endfor %}
       </div>
     </nav> <!-- navbar end -->
     
-    <div class="container-fluid p-0" style="max-width: 450px;">
+    <div class="container-fluid p-0" >
       {% block content %}
       
       {% endblock content %}
