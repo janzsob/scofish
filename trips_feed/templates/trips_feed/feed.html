@@ -5,6 +5,7 @@
 <!-- Warning message for user if he/she has already an active trip -->
 {% if messages %}
     <div class="row mx-3 my-3 justify-content-center text-center">
+        <div class="col-10 col-md-6">
         {% for message in messages %}
             {% if message.tags == "error" %}
             <div class="alert alert-danger my-1 p-1" role="alert">
@@ -12,45 +13,48 @@
             </div>
             {% endif %}
         {% endfor %}
+        </div>
+        
     </div>
 {% endif %}
 
-<!--
-<div class="row mt-2 ms-2 ps-3" style="font-size:22px; font-weight:600;">Horgásztúrák</div>
--->
-{% for trip in trips  %}
-    <div class="row justify-content-center mx-3 my-3">
-        <div class="card px-2 py-1 my-1 trip-card" style="width: 23rem;">
-            <a href="{% url 'new_trip:trip_details' trip.trip_id %}" class="text-decoration-none text-reset">
-                <div class="card-body p-0">
-                    <div class="d-flex m-0 ps-1 px-md-4 py-1">
-                        <h4 class="p-0 m-0" style="font-size: 18px; font-weight:bold; color:#00754B">{{ trip.lake }}</h4>
-                    </div>
-                    
-                    <div class="d-flex px-md-4" style="font-size: 14px;">
-                        <div class="p-1 py-sm-1 pe-sm-1 ps-sm-0">
-                            🎣 Összfogás: <span class="" style="font-size: 15px; font-weight:600">{{ trip.total_catch_weight }} kg</span>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4">
+        {% for trip in trips  %}
+        <div class="row justify-content-center mx-3 my-3">
+            <div class="card px-2 py-1 my-1 trip-card" style="">
+                <a href="{% url 'new_trip:trip_details' trip.trip_id %}" class="text-decoration-none text-reset">
+                    <div class="card-body p-0">
+                        <div class="d-flex m-0 ps-1 px-md-4 py-1">
+                            <h4 class="p-0 m-0" style="font-size: 18px; font-weight:bold; color:#00754B">{{ trip.lake }}</h4>
                         </div>
-                        <div class="p-1">
-                            🧍 Horgász: <span class="" style="font-size: 15px; font-weight:600">{{ trip.fisherman.all.count }} db</span>
+                        
+                        <div class="d-flex px-md-4" style="font-size: 14px;">
+                            <div class="p-1 py-sm-1 pe-sm-1 ps-sm-0">
+                                🎣 Összfogás: <span class="" style="font-size: 15px; font-weight:600">{{ trip.total_catch_weight }} kg</span>
+                            </div>
+                            <div class="p-1">
+                                🧍 Horgász: <span class="" style="font-size: 15px; font-weight:600">{{ trip.fisherman.all.count }} db</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="row ps-1 px-md-4 py-1">
-                    <!-- If the starting date and ending date are the same then it shows only the strating one -->
-                    <span class="" style="font-size: 15px; color: #6A9A8B">📅 {{ trip.s_date|date:"SHORT_DATE_FORMAT" }} 
-                    {% if not trip.s_date|date:"SHORT_DATE_FORMAT" == trip.e_date|date:"SHORT_DATE_FORMAT" %}
-                    - {{ trip.e_date|date:"SHORT_DATE_FORMAT" }}
-                    {% endif %}
-                    </span>
-                    </div>
-            
-                    
-                </div> <!-- card-body end -->
-            </a>
-        </div> <!-- card end -->
-    </div> <!-- row end -->
-{% endfor %}
+                        
+                        <div class="row ps-1 px-md-4 py-1">
+                        <!-- If the starting date and ending date are the same then it shows only the strating one -->
+                        <span class="" style="font-size: 15px; color: #6A9A8B">📅 {{ trip.s_date|date:"SHORT_DATE_FORMAT" }} 
+                        {% if not trip.s_date|date:"SHORT_DATE_FORMAT" == trip.e_date|date:"SHORT_DATE_FORMAT" %}
+                        - {{ trip.e_date|date:"SHORT_DATE_FORMAT" }}
+                        {% endif %}
+                        </span>
+                        </div>
+                
+                        
+                    </div> <!-- card-body end -->
+                </a>
+            </div> <!-- card end -->
+        </div> <!-- row end -->
+        {% endfor %}
     
+    </div>
+</div>
 
 {% endblock content %}

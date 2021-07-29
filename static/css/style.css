@@ -45,7 +45,7 @@ body {
     right: 0;
     height: 100%;
     width: 100%;
-    /*background-color: rgba(47, 50, 58, 0.75);*/
+    background-color: rgba(0,0,0,0.5);
     visibility: hidden;
     z-index: 1031;
 }
@@ -77,6 +77,12 @@ body {
     text-decoration: none;
 }
 
+/* Border Shadow class */
+.border-shadow {
+    border-radius: 20px;
+    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
+}
+
 /* Feed Page, Trip cards */
 .trip-card {
     border-radius: 20px;
@@ -84,45 +90,18 @@ body {
 }
 
 /* Catch page */
-.catch-card {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
-}
-
 .catch-pic {
     border-radius: 20px;
     box-shadow: 0 0 7px 2px rgba(0,0,0,0.1);
 }
 
-/* Trip details page */
-.trip-details-catch {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
-}
 
 .info-card {
-    /*
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;*/
     border-radius: 15px;
     box-shadow: 0 0 7px 1px rgba(0,0,0,0.1);
 }
 
 /* Profile page */
-.sum-card {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
-}
-
-.max-catch-card {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);    
-}
-
-.max-catch-pic {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
-}
 
 .tips-card {
     border-radius: 20px;

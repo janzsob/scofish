@@ -83,7 +83,7 @@ class HookBaitCreateView(CreateView):
         return super().form_valid(formset)
 
     def get_success_url(self):
-        return reverse('trips_feed:feed')
+        return reverse('user_profile:profile', args=(self.kwargs['pk'],))
 """
 
 class HookBaitUpdateView(UpdateView):

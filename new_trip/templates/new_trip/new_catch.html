@@ -1,136 +1,137 @@
 {% extends "base.html" %}
 {% block title %}Scofish - Fogás Rögzítése{% endblock %}
 
-
 {% block content %}
 
-<div class="row mx-3 my-3 justify-content-center">
-    <div class="card px-1" style="width: 25rem;">
-
-        <h3 class="mt-3 mb-1 text-center">Fogás Rögzítése</h3>
-        
-        <div class="card-body">
-        <form method="POST" id="catchForm" data-hookbaits-url="{% url 'new_trip:ajax_load_hookbaits' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label for="" class="form-label mb-1">Horgász:</label>
-                    {% for error in form.fisherman.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.fisherman }}
-                </div>
-            </div>
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label for="LakeInput" class="form-label mb-1">Halfaj:</label>
-                    {% for error in form.fish_type.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.fish_type }}
-                </div>
-            </div>
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label for="CityInput" class="form-label mb-1">Súly(kg):</label>
-                    {% for error in form.weight.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.weight }}
-                </div>
-            </div>
-            <!--
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label for="CityInput" class="form-label mb-1">Hossz(cm):</label>
-                    {% for error in form.length.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.length }}
-                    <div class="form-text my-1">Nem kötelező</div>
-                </div>
-            </div>
-            -->
-
-            <div class="row justify-content-center mb-2" >
-                <label for="" class="form-label mb-1">Horogcsali:</label>
-                <div class="col-sm-12">
-                    <div class="d-flex justify-content-start p-0 mb-2" style="color:#00754B">
-                        <div class="">
-                            <label class="form-check-label fst-italic pe-2" style="font-size: 15px;">
-                                Saját csalikból választok!
-                            </label>
-                                
+<div class="row justify-content-center m-0">
+    <div class="col-12 col-md-6 col-lg-4 p-0">
+        <div class="row mx-3 my-3 justify-content-center">
+            <div class="card px-1 border-shadow">
+                <h3 class="mt-3 mb-1 text-center" style="font-weight: 500; font-size:28px; color:#00754B">Fogás Rögzítése</h3>
+                <div class="card-body">
+                <form method="POST" id="catchForm" data-hookbaits-url="{% url 'new_trip:ajax_load_hookbaits' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12">
+                            <label for="" class="form-label mb-1">Horgász:</label>
+                            {% for error in form.fisherman.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.fisherman }}
                         </div>
-                        <div class="">
-                            <input class="form-check-input" type="checkbox" value="" id="choice">
-                        </div>
-                    </div>  
-                </div>
-                <div class="col-sm-12" id="newBaits">
-                    {% for error in form.hookbait_name.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.hookbait_name }}
-                </div>
-                <div class="col-sm-12" id="savedBaits">
-                    {% for error in form.hookbait.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.hookbait }}
-                </div>
-            </div>
-
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label for="" class="form-label mb-1">Kép:</label>
-                    {% for error in form.image.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    {{ form.image }}
-                    <div class="form-text my-1">Nem kötelező</div>
-                </div>
-            </div>
-            <div class="row justify-content-center mb-2">
-                <div class="col-sm-12">
-                    <label class="form-label mb-1" for="StartingDate">Fogás időpontja:</label>
-                    {% for error in form.datetime.errors  %}
-                    <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
-                        HIBA: {{ error }}                            
-                    </p>
-                    {% endfor %}
-                    <div class="input-group mb-1">
-                        {{ form.datetime }}
-                        <span class="input-group-text">
-                            <i class="bi bi-calendar"></i>
-                        </span>
                     </div>
-                </div>
-            </div>         
-            
-            
-            <hr>
-            <!-- form submit button -->
-            <input type="submit" class="btn w-100" style="background-color: #00754B!important; color: #fff!important" value="Beküldés">
-        </form>
-        </div> <!-- card body end -->
-    </div> <!--  card end -->
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12">
+                            <label for="LakeInput" class="form-label mb-1">Halfaj:</label>
+                            {% for error in form.fish_type.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.fish_type }}
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12">
+                            <label for="CityInput" class="form-label mb-1">Súly(kg):</label>
+                            {% for error in form.weight.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.weight }}
+                        </div>
+                    </div>
+                    <!--
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12">
+                            <label for="CityInput" class="form-label mb-1">Hossz(cm):</label>
+                            {% for error in form.length.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.length }}
+                            <div class="form-text my-1">Nem kötelező</div>
+                        </div>
+                    </div>
+                    -->
+        
+                    <div class="row justify-content-center mb-2" >
+                        <label for="" class="form-label mb-1">Horogcsali:</label>
+                        <div class="col-sm-12">
+                            <div class="d-flex justify-content-start p-0 mb-2" style="color:#00754B">
+                                <div class="">
+                                    <label class="form-check-label fst-italic pe-2" style="font-size: 15px;">
+                                        Korábbi csalik listája
+                                    </label>
+                                        
+                                </div>
+                                <div class="">
+                                    <input class="form-check-input" type="checkbox" value="" id="choice">
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col-sm-12" id="newBaits">
+                            {% for error in form.hookbait_name.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.hookbait_name }}
+                        </div>
+                        <div class="col-sm-12" id="savedBaits">
+                            {% for error in form.hookbait.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.hookbait }}
+                        </div>
+                    </div>
+        
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12">
+                            <label for="" class="form-label mb-1">Kép:</label>
+                            {% for error in form.image.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            {{ form.image }}
+                            <div class="form-text my-1">Nem kötelező</div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12">
+                            <label class="form-label mb-1" for="StartingDate">Fogás időpontja:</label>
+                            {% for error in form.datetime.errors  %}
+                            <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
+                                HIBA: {{ error }}                            
+                            </p>
+                            {% endfor %}
+                            <div class="input-group mb-1">
+                                {{ form.datetime }}
+                                <span class="input-group-text">
+                                    <i class="bi bi-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>         
+                    
+                    <hr>
+                    <!-- form submit button -->
+                    <input type="submit" class="btn w-100" style="background-color: #00754B!important; color: #fff!important" value="Beküldés">
+                </form>
+                </div> <!-- card body end -->
+            </div> <!--  card end -->
+        </div> <!-- row end -->
+    </div> <!-- col end -->
 </div> <!-- row end -->
+
 
 <script>
     // AJAX

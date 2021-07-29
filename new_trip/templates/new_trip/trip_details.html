@@ -1,86 +1,91 @@
 {% extends "base.html" %}
 {% block title %}Scofish - Horgásztúra{% endblock %}
 
-
 {% block content %}
-<!-- Summary table about the trip -->
-<div class="row justify-content-center m-2">
-    <div class="card font-monospace p-2 mb-2  info-card" style="width: 25rem;">
-        <div class="card-body position-relative p-0">
-            <div class="d-flex justify-content-center text-center my-1 mx-0" >
-                <h4 class="m-0" style="color: #00754B; font-size:22px; font-weight:600">{{ trip.lake }}</h4>    
-            </div>
-            <div class="d-flex flex-column text-center my-2">
-                <div class="mb-1" style="font-size: 16px;">📅Kezdés: <span style="color: #6A9A8B; font-size:15px">{{ trip.s_date|date:"Y.m.d. H:i" }}</span></div>
-                <div style="font-size: 16px;">📅Befejezés: <span style="color: #6A9A8B; font-size:15px">{{ trip.e_date|date:"Y.m.d. H:i" }}</span></div>
-            </div>
-            <div class="d-flex justify-content-center my-1">
-                <div class="align-self-center px-1" style="font-weight:500; font-size:16px">
-                    {% if trip.fisherman.all.count == 1 %}
-                    Horgász:
-                    {% else %}
-                    Horgászok:
-                    {% endif %}
-                </div>
-                <div class="d-flex flex-wrap">
-                    {% for fisherman in trip.fisherman.all %}
-                    <div class="px-2 m-0" style="color: #00C6CF; font-weight:600; font-size:16px">
-                        {{ fisherman }}
+
+<div class="row justify-content-center m-0">
+    <div class="col-12 col-md-6 col-lg-4 p-0">
+        <!-- Summary table about the trip -->
+        <div class="row justify-content-center m-2">
+            <div class="card font-monospace p-2 mb-2  info-card">
+                <div class="card-body position-relative p-0">
+                    <div class="d-flex justify-content-center text-center my-1 mx-0" >
+                        <h4 class="m-0" style="color: #00754B; font-size:22px; font-weight:600">{{ trip.lake }}</h4>    
                     </div>
+                    <div class="d-flex flex-column text-center my-2">
+                        <div class="mb-1" style="font-size: 16px;">📅Kezdés: <span style="color: #6A9A8B; font-size:15px">{{ trip.s_date|date:"Y.m.d. H:i" }}</span></div>
+                        <div style="font-size: 16px;">📅Befejezés: <span style="color: #6A9A8B; font-size:15px">{{ trip.e_date|date:"Y.m.d. H:i" }}</span></div>
+                    </div>
+                    <div class="d-flex justify-content-center my-1">
+                        <div class="align-self-center px-1" style="font-weight:500; font-size:16px">
+                            {% if trip.fisherman.all.count == 1 %}
+                            Horgász:
+                            {% else %}
+                            Horgászok:
+                            {% endif %}
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            {% for fisherman in trip.fisherman.all %}
+                            <div class="px-2 m-0" style="color: #00C6CF; font-weight:600; font-size:16px">
+                                {{ fisherman }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% for fisherman in trip.fisherman.all %}
+                    {% if fisherman.user == user %}
+                    <!-- Edit Trip button -->
+                    <div class="d-flex flex-row-reverse position-absolute top-0 end-0">
+                        <a href="{% url 'new_trip:edit_trip' trip.trip_id %}" class="text-decoration-none text-reset p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00754B" class="bi bi-gear" viewBox="0 0 16 16">
+                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    {% endif %}
                     {% endfor %}
-                </div>
-            </div>
+                </div> <!-- card body end -->
+            </div> <!-- card end -->
+        </div> <!-- row end -->
 
-            {% for fisherman in trip.fisherman.all %}
-            {% if fisherman.user == user %}
-            <!-- Edit Trip button -->
-            <div class="d-flex flex-row-reverse position-absolute top-0 end-0">
-                <a href="{% url 'new_trip:edit_trip' trip.trip_id %}" class="text-decoration-none text-reset p-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00754B" class="bi bi-gear" viewBox="0 0 16 16">
-                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                    </svg>
-                </a>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div> <!-- card body end -->
-    </div> <!-- card end -->
-</div> <!-- row end -->
+        <!-- Navigation for the trip -->
+        <ul class="nav justify-content-center my-1">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn" style="background-color: #00754B!important; color: #fff!important">🎣 Új fogás</button></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'stats:trip_stat' trip.trip_id %}"><button class="btn" style="background-color: #00C6CF!important; color: #3B3B3B!important">📈 Statisztika</button></a>
+            </li>
+        </ul>
 
-<!-- Navigation for the trip -->
-<ul class="nav justify-content-center my-1">
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'new_trip:new_catch' trip.trip_id %}"><button class="btn" style="background-color: #00754B!important; color: #fff!important">🎣 Új fogás</button></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'stats:trip_stat' trip.trip_id %}"><button class="btn" style="background-color: #00C6CF!important; color: #3B3B3B!important">📈 Statisztika</button></a>
-    </li>
-</ul>
-
-<div class="row justify-content-center text-center mx-5">
-    <!-- Success message: catch was recorded message, catch was modified -->
-    {% if messages %}
-        {% for message in messages %}
         <!-- Success message: catch was recorded message, catch was modified -->
-        {% if message.tags == "success" %}
-        <div class="alert alert-success my-2 mx-3 p-1" role="alert" style="width: 15rem;">
-            {{ message }}
-        </div>
+        {% if messages %}
+        <div class="row justify-content-center text-center m-0">
+            <div class="col-8 col-md-6 p-0">
+                {% for message in messages %}
+                <!-- Success message: catch was recorded message, catch was modified -->
+                {% if message.tags == "success" %}
+                <div class="alert alert-success my-2 mx-3 p-1" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+                <!-- Error message:  -->
+                {% if message.tags == "error" %}
+                <div class="alert alert-danger my-2 mx-3 p-1" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div> <!-- col end -->
+        </div> <!-- row end -->
         {% endif %}
-        <!-- Error message:  -->
-        {% if message.tags == "error" %}
-        <div class="alert alert-danger my-2 mx-3 p-1" role="alert" style="width: 15rem;">
-            {{ message }}
-        </div>
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-</div>
-
-{% for catch in catches %}
+        
+        <!-- List of catches -->
+        {% for catch in catches %}
         <div class="row justify-content-center mx-4 my-2">
-            <div class="card p-2 mb-2 trip-details-catch" style="width: 23rem;">
+            <div class="card p-2 mb-3 border-shadow">
                 <a href="{% url 'catch_details:catch' catch.catch_id %}" class="text-decoration-none text-reset">
                     <div class="card-body p-0">
                         <div class="d-flex">
@@ -101,5 +106,12 @@
                 </a>
             </div> <!-- card end -->
         </div> <!-- row end -->
-{% endfor %}
+        {% endfor %}
+
+    </div> <!-- col end -->
+</div> <!-- row end -->
+
+
+
+
 {% endblock content %}

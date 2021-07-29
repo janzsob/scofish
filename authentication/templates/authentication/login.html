@@ -1,69 +1,76 @@
 {% extends "base.html" %}
 {% block title %}Scofish - Bejelentkezés{% endblock %}
+
 {% block content %}
 
-<!-- messages -->
-{% if messages %}
-    <div class="row mx-3 my-3 justify-content-center text-center">        
-        {% for message in messages %}
-            <!-- incorrect username or password -->
-            {% if message.tags == "error" %}
-                <div class="alert alert-danger mb-3 p-1" role="alert">
-                    {{ message }}
+<div class="row justify-content-center m-0">
+    <div class="col-12 col-md-6 col-lg-4 p-0">
+        <!-- messages -->
+        {% if messages %}
+            <div class="row mx-3 my-3 justify-content-center text-center">        
+                <div class="col-10 col-md-8 p-0">
+                    {% for message in messages %}
+                        <!-- incorrect username or password -->
+                        {% if message.tags == "error" %}
+                            <div class="alert alert-danger mb-3 p-1" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                        <!-- the account was created -->
+                        {% if message.tags == "success" %}
+                        <div class="alert alert-success mb-3 p-1" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endif %}
+                        <!-- need to be logged in -->
+                        {% if message.tags == "info" %}
+                        <div class="alert alert-info mb-3 p-1" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-            {% endif %}
-            <!-- the account was created -->
-            {% if message.tags == "success" %}
-            <div class="alert alert-success mb-3 p-1" role="alert">
-                {{ message }}
             </div>
-            {% endif %}
-            <!-- need to be logged in -->
-            {% if message.tags == "info" %}
-            <div class="alert alert-info mb-3 p-1" role="alert">
-                {{ message }}
-            </div>
-            {% endif %}
-        {% endfor %}
+        {% endif %}
+
+        <div class="row mx-3 my-3 justify-content-center text-center">
+            <div class="card px-1 border-shadow">
+                <h1 class="my-2" style="font-weight: 500; font-size:28px; color:#00754B">Belépés</h1>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input type="text" name="username" class="form-control" placeholder="Felhasználónév..." required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">
+                                <i class="bi bi-key"></i>
+                            </span>
+                            <input type="password" name="password" class="form-control" placeholder="Jelszó..." required>
+                        </div>
+                        <br>
+                        <input type="submit" class="btn w-100" style="background-color: #00754B!important; color: #fff!important" value="Belépés">
+                    </form>
+                    
+                    <div class="row alert m-0">
+                        <div class="col-sm-12">
+                            Nincs fiókja?
+                        </div>
+                        <div class="col-sm-12">
+                            <a href="{% url 'auth:register' %}" class="alert-link" style="color: #6A9A8B!important;">Regisztráció</a>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <a href="{% url 'auth:password_reset' %}" style="color: #00C6CF; font-weight:500">Elfejeltetted a jelszavad?</a>
+                        </div>
+                    </div> <!-- alert end -->
+                </div><!--card body end-->
+            </div><!--card end-->
+        </div>
     </div>
-{% endif %}
-
-
-<div class="row mx-3 my-3 justify-content-center text-center">
-    <div class="card px-1 px-md-3" style="width: 25rem;">
-        <h1 class="my-2" style="font-weight: 500; font-size:28px; color:#00754B">Belépés</h1>
-        <div class="card-body">
-            <form method="POST" action="">
-                {% csrf_token %}
-                <div class="input-group mb-3">
-                    <span class="input-group-text">
-                        <i class="bi bi-person"></i>
-                    </span>
-                    <input type="text" name="username" class="form-control" placeholder="Felhasználónév..." required>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">
-                        <i class="bi bi-key"></i>
-                    </span>
-                    <input type="password" name="password" class="form-control" placeholder="Jelszó..." required>
-                </div>
-                <br>
-                <input type="submit" class="btn w-100" style="background-color: #00754B!important; color: #fff!important" value="Belépés">
-            </form>
-            
-            <div class="row alert m-0">
-                <div class="col-sm-12">
-                    Nincs fiókja?
-                </div>
-                <div class="col-sm-12">
-                    <a href="{% url 'auth:register' %}" class="alert-link" style="color: #6A9A8B!important;">Regisztráció</a>
-                </div>
-                <div class="col-12 mt-2">
-                    <a href="{% url 'auth:password_reset' %}" style="color: #00C6CF; font-weight:500">Elfejeltetted a jelszavad?</a>
-                </div>
-            </div> <!-- alert end -->
-        </div><!--card body end-->
-    </div><!--card end-->
 </div>
+
 
 {% endblock content %}

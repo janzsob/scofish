@@ -60,7 +60,7 @@ class CreateTripView(CreateTripLoginRequiredMixin, SuccessMessageMixin, CreateVi
                 return True
         return False
 
-    # user is not able to a new trip if he/she has already an existing one.
+    # user is not able to create a new trip if he/she has already an existing one.
     def get(self, request, *args, **kwargs):
         if self.has_active_trip():
             messages.error(request, 'Van már egy aktív horgásztúrád.')

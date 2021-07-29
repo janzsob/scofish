@@ -180,12 +180,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # for heroku deployment
 """ CHANGE IT IN PRODUCTION! """
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 
 #S3 BUCKETS CONFIG (deployment)
 """ CHANGE IT IN PRODUCTION! """
-"""
+
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'scofish.net-bucket'
@@ -195,7 +195,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_S3_REGION_NAME = 'eu-central-1' 
 AWS_S3_SIGNATURE_VERSION = 's3v4'
-"""
+
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

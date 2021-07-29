@@ -6,11 +6,6 @@ from django.views.generic.edit import FormView
 from django.core.mail import send_mail
 
 
-"""
-def hello(request):
-    return render(request, "hello.html", context={})
-"""
-
 def register_view(request):
     form = CreateUserForm(request.POST or None)
     print(form.errors.as_data())
@@ -26,7 +21,7 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated: # detect if user is logged in
-        messages.info(request, "Már be van jelentkezve.")
+        messages.error(request, "Már be van jelentkezve.")
         return redirect("trips_feed:feed")
     
     if request.method == "POST":
