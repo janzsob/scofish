@@ -37,7 +37,7 @@
         
         <div class="row mx-3">
             <div class="p-2" style="font-size: 20px; font-weight:600; color:#00754B">
-                Max fogás
+                Legnagyobb fogás
             </div>
         </div>
         
@@ -63,10 +63,10 @@
                             <div class="card-body p-1 py-3">
                                 <div class="row text-center m-0">
                                     <div class="col-6">
-                                        <img src="{{ catch.image.url }}" class="border-shadow" style="width: 7.5rem;" alt="Fish">
+                                        <img src="{{ catch.image.url }}" class="img-fluid border-shadow" alt="Fish">
                                     </div>
                                     <div class="col-6 d-flex justify-content-center p-0">
-                                        <p class="m-0 align-self-center" style="font-size: 24px; font-weight:600; ">{{ catch.weight|floatformat:1 }} kg</p>
+                                        <p class="m-0 align-self-center" style="font-size: 28px; font-weight:600; ">{{ catch.weight|floatformat:1 }} kg <i class="bi bi-chevron-right" style="font-size:22px;"></i></p>
                                     </div>
                                 </div>
                             </div>
@@ -80,27 +80,39 @@
         
         <div class="row mx-3">
             <div class="p-2" style="font-size: 20px; font-weight:600; color:#00754B">
-                Saját csalik
+                Saját csalik <span class="px-1 tooltipClass" data-bs-placement="right" title="Itt tudod szerkeszteni a saját csalik listáját."><i class="bi bi-info-circle-fill" style="font-size: 20px; color:#3B3B3B"></i></span>
             </div>
         </div>
         
         <div class="row justify-content-center mx-2" >
             <div class="col-12 p-0">
-                <ul class="list-group text-center custom-borders m-2 p-0">
+                
                     {% if own_hookbaits.count == 0 %}
-                    <a href="{% url 'user_profile:hookbaits' request.user.fisherman.fisherman_id %}" class="list-group-item list-group-item-action p-3" style="font-size: 20px; font-weight:600;">Nincs még saját csalid</a>        
+                    <ul class="list-group text-center m-2 p-0 border-shadow">
+                        <a href="{% url 'user_profile:hookbaits' request.user.fisherman.fisherman_id %}" class="list-group-item list-group-item-action p-3" style="font-size: 20px; font-weight:600;">Nincs még saját csalid</a>        
+                    </ul>
                     {% else %}
-                        {% for hookbait in own_hookbaits %}    
-                        <a href="{% url 'user_profile:hookbaits' request.user.fisherman.fisherman_id %}" class="list-group-item list-group-item-action p-2" style="font-size: 18px; font-weight:600;">{{ hookbait.name }}</a>
-                        {% endfor %}
+                    <ul class="list-group m-2 p-0">
+                        <a class="border-shadow text-decoration-none" href="{% url 'user_profile:hookbaits' request.user.fisherman.fisherman_id %}">
+                            {% for hookbait in own_hookbaits %}
+                                <li class="list-group-item list-group-item-action p-2" style="font-size: 18px; font-weight:600;">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="ps-2 ps-md-3">{{ hookbait.name }}</div>
+                                        <div class="align-self-center pe-2 pe-md-3 ps-1">
+                                            <i class="bi bi-chevron-right" style="font-size:18px;"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </a>
+                    </ul>
                     {% endif %}
-                </ul>
+                
             </div>
             
         </div>
 
     </div> <!-- col end -->
 </div> <!-- row end -->
-
 
 {% endblock content %}

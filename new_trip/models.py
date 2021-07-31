@@ -56,7 +56,7 @@ class HookBait(models.Model):
         verbose_name_plural = "Hookbaits"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.hookbait_id}"
 
 
 # Choices for catch

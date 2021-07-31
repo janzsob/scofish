@@ -7,7 +7,8 @@
     <div class="col-12 col-md-6 col-lg-4 p-0">
         <div class="row mx-3 my-3 justify-content-center">
             <div class="card px-1 border-shadow">
-                <h3 class="mt-3 mb-1 text-center" style="font-weight: 500; font-size:28px; color:#00754B">Fogás Rögzítése</h3>
+                <h3 class="mt-3 mb-1 text-center" style="font-weight: 600; font-size:28px; color:#00754B">Fogás Rögzítése</h3>
+                <h4 class="mt-3 mb-1 px-2 text-center" style="font-weight: 500; font-size:18px; color:#00754B">Tartsd számon az eredményeidet a fogásaid rögzítésével!</h4>
                 <div class="card-body">
                 <form method="POST" id="catchForm" data-hookbaits-url="{% url 'new_trip:ajax_load_hookbaits' %}" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -61,12 +62,15 @@
                     -->
         
                     <div class="row justify-content-center mb-2" >
-                        <label for="" class="form-label mb-1">Horogcsali:</label>
+                        <label for="" class="form-label mb-1">
+                            Horogcsali:
+                            <span class="px-1 tooltipClass" data-bs-placement="right" title="A használt horogcsali a saját csalik listájába kerül mentésre, melyet a profilodban tudsz szerkeszteni."><i class="bi bi-info-circle-fill" style="font-size: 18px; color:#3B3B3B"></i></span>
+                        </label>
                         <div class="col-sm-12">
-                            <div class="d-flex justify-content-start p-0 mb-2" style="color:#00754B">
+                            <div class="d-flex justify-content-start p-0 mb-2" style="color:#6A9A8B">
                                 <div class="">
                                     <label class="form-check-label fst-italic pe-2" style="font-size: 15px;">
-                                        Korábbi csalik listája
+                                        Választás a saját csalikból
                                     </label>
                                         
                                 </div>

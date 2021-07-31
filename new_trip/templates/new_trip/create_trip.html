@@ -9,7 +9,8 @@
     <div class="col-12 col-md-6 col-lg-4 p-0">
         <div class="row mx-3 my-3 justify-content-center">
             <div class="card px-1 border-shadow">
-                <h3 class="mt-3 mb-1 text-center" style="font-weight: 500; font-size:28px; color:#00754B">Új Horgásztúra</h3>
+                <h3 class="mt-3 mb-1 text-center" style="font-weight: 600; font-size:28px; color:#00754B">Új Horgászat</h3>
+                <h4 class="mt-3 mb-1 px-2 text-center" style="font-weight: 500; font-size:18px; color:#00754B">Hozz létre egy új horgászatot és kezd el rögzíteni a fogásaidat!</h4>
                 <div class="card-body">
                 <form method="POST" action="">
                     {% csrf_token %}
@@ -72,7 +73,10 @@
                     <div class="row justify-content-center mb-2">
                         <div class="col-sm-12">
                             <div class="col-sm-12">
-                                <label for="LakeInput" class="form-label mb-1">Horgász(ok):</label>
+                                <label for="LakeInput" class="form-label mb-1">
+                                    Horgász(ok):
+                                    <span class="px-1 tooltipClass" data-bs-placement="right" title="Csak regisztrált felhasználók vehetnek részt a horgászaton."><i class="bi bi-info-circle-fill" style="font-size: 18px; color:#3B3B3B"></i></span>
+                                </label>
                                 {% for error in form.fisherman.errors  %}
                                 <p class="text-danger fw-bolder fst-italic fs-5 mb-1">
                                     HIBA: {{ error }}                            

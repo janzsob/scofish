@@ -101,17 +101,6 @@ body {
     box-shadow: 0 0 7px 1px rgba(0,0,0,0.1);
 }
 
-/* Profile page */
-
-.tips-card {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
-}
-
-.custom-borders {
-    border-radius: 20px;
-    box-shadow: 0 0 7px 3px rgba(0,0,0,0.1);
-}
 
 /* Home page */
 #landingHeader {

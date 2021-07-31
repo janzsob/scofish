@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView, DeleteView
+from datetime import datetime
 
 """
 #@login_required
@@ -129,14 +130,27 @@ class NewCatchView(NewCatchLoginRequiredMixin, SuccessMessageMixin, CreateView):
                 return True
         return False
 
-    # It renders the new catch page, if the reguest user attends in the trip
+    # It checks whether the fishing trip has ended.
+    def is_trip_open(self):
+        trip = Trips.objects.filter(trip_id=self.kwargs.get('pk'))
+        for t in trip:
+            if t.is_active == True:
+                return True
+        return False
+
     def get(self, request, *args, **kwargs):
-        if self.is_in_trip():
-            return super().get(request, *args, **kwargs)
+        # checks whether the trip is open
+        if self.is_trip_open():
+            # checks wether the user in the trip
+            if self.is_in_trip():
+                return super().get(request, *args, **kwargs)
+            else:
+                messages.error(request, 'Nem rögzíhetsz fogást más horgászatán.')
+                return redirect('new_trip:trip_details', pk=self.kwargs.get('pk'))
         else:
-            messages.error(request, 'Nem rögzíhet fogást más horgásztúráján.')
+            messages.error(request, 'A horgászat lezárult. Már nem tudsz új fogásokat rögzíteni.')
             return redirect('new_trip:trip_details', pk=self.kwargs.get('pk'))
-            
+                
         
     # It lists those fishermen who attend at the trip
     def get_form_kwargs(self):

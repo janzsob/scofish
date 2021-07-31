@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %} <!-- It needs for jquery.formset reference -->
-{% block title %}Scofish - Hookbait{% endblock %}
+{% block title %}Scofish - Csalik{% endblock %}
 {% block content %}
 
 <div class="row justify-content-center m-0">
@@ -12,7 +12,7 @@
                         {% csrf_token %}
                         <table class="d-flex justify-content-center">
                             {{ formset.management_form }}
-                            {% for form in formset.forms %}
+                            {% for form in formset %}
                             <tr class="formset_row">
                                 {% for field in form.visible_fields %}
                                 <td class="pb-2">

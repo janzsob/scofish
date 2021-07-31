@@ -55,7 +55,7 @@
               <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'trips_feed:feed' %}">Horgászatok</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'new_trip:create_trip' %}">Új Túra</a>
+              <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'new_trip:create_trip' %}">Új Horgászat</a>
             </li>
             <li class="nav-item">
               <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="{% url 'auth:contact' %}">Kapcsolat</a>
@@ -103,7 +103,13 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
+    <!-- Enable tooltips -->
+    <script>
+      const tooltips = document.querySelectorAll('.tooltipClass')
+      tooltips.forEach( t => {
+          new bootstrap.Tooltip(t)
+      })
+    </script>
     <!-- Flactpickr script -->    
     <script>
       // This code activates flatpickr on fields with the 'datetimefield' class when the document has loaded
