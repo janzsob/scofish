@@ -43,7 +43,7 @@ def create_trip_view(request):
 class CreateTripLoginRequiredMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.info(request, 'Jelentkezzen be a horgásztúra létrehozásához.')
+            messages.info(request, 'Jelentkezz be az új horgászat létrehozásához.')
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
 
