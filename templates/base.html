@@ -3,8 +3,20 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta name="author" content="Scofish">
+
+    <title>Scofish | {% block title %} {% endblock %} | Horgász Alkalmazás</title>
+
+    <meta name="description" content="A Scofish egy horgász alkalmazás, mellyel könnyedén számon tarthatod a fogásaidat és versenyezhetsz a barátaiddal, hogy ki fog több halat.">
+
+    <meta name="keywords" content="horgász alkalmazás, horgász applikáció, alkalmazás horgászoknak, online fogási napló">
+
+    <link rel="canonical" href="{{ request.path }}">
+
+    <link rel="home" href="{% url 'trips_feed:home' %}">
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -40,8 +52,6 @@
     <!-- CSS link -->
     {% load static %}
     <link href="{% static '/css/style.css' %}" rel="stylesheet" type="text/css"/>
-    
-    <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -102,7 +112,7 @@
         <!-- It shows the user's ongoing trip -->
         {% for trip in  request.user.fisherman.trips_set.all %}
           {% if trip.is_active %}
-            <a class="btn navbar-brand order-3 order-lg-3 p-1 m-0  mx-lg-2" style="background-color: #f1f0f0!important; color: #00754B!important; font-size: 17px" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Túra</a>
+            <a class="btn navbar-brand order-3 order-lg-3 p-1 m-0  mx-lg-2" style="background-color: #f1f0f0!important; color: #00754B!important; font-size: 17px" href="{% url 'new_trip:trip_details' trip.trip_id %}">Aktuális Horgászat</a>
           {% endif %}
         {% endfor %}
       </div>

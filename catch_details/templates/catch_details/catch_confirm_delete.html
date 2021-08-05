@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Scofish - Fogás törlése{% endblock %}
+{% block title %}Fogás törlése{% endblock %}
 
 
 {% block content %}
@@ -21,7 +21,7 @@
             </div>
             <div class="card p-3 border-shadow">
                 {% if catch.image %}
-                    <img src="{{ catch.image.url }}" class="card-img-top catch-pic" alt="Fish">        
+                    <img src="{{ catch.image.url }}" class="card-img-top catch-pic" alt="Fogás rögzítve a horgász alkalmazásban.">        
                 {% endif %}
                 <div class="card-body p-0 m-0 mt-3">
                     <h5 class="mb-2" style="color: #00754B; font-size: 18px; font-weight:600">🐟 {{ catch.fish_type }}, {{ catch.weight }} kg{% if catch.length %}, {{ catch.length }} cm{% endif %}</h5>

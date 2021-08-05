@@ -31,7 +31,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("trips_feed:feed")
+            return redirect("trips_feed:home")
         else:
             messages.error(request, "A felhasználónév vagy a jelszó helytelen.")
     context= {}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Scofish - Fogás{% endblock %}
+{% block title %}Fogás{% endblock %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
             <div class="card p-3 border-shadow">
                 {% if catch.image %}
                 <a href="{{ catch.image.url }}" target="_blank"> <!-- It opens the image in a new tab -->
-                    <img src="{{ catch.image.url }}" class="card-img-top catch-pic" alt="Fish">
+                    <img src="{{ catch.image.url }}" class="card-img-top catch-pic" alt="Fogás rögzítve a horgász alkalmazásban.">
                 </a>
                 {% endif %}
                 <div class="card-body p-0 m-0 mt-3">
