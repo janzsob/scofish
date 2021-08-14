@@ -52,7 +52,7 @@
                             <input type="password" name="password" class="form-control" placeholder="Jelszó..." required>
                         </div>
                         <br>
-                        <input type="submit" class="btn w-100" style="background-color: #00754B!important; color: #fff!important" value="Belépés">
+                        <input type="submit" onclick="dataLayer.push({'event': 'login'});" class="btn w-100" style="background-color: #00754B!important; color: #fff!important" value="Belépés">
                     </form>
                     
                     <div class="row alert m-0">
@@ -72,12 +72,5 @@
     </div>
 </div>
 
-
-<script>
-window.dataLayer = window.dataLayer || [];
-window.dataLayer.push({
-    'event': 'login',
-});
-</script>
 
 {% endblock content %}
